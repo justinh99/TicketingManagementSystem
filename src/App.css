@@ -1,0 +1,144 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* src/components/TicketForm.css */
+.ticket-form-container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.ticket-list-container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.ticket-list {
+  width: 48%; /* Adjust the width as needed to leave space for margins and gaps */
+}
+
+.left-half {
+  margin-right: 2%; /* Add a small margin between the two halves */
+}
+
+.right-half {
+  margin-left: 2%; /* Add a small margin between the two halves */
+}
+
+.ticket {
+  border: 1px solid #ccc; /* Add a border around the ticket */
+  padding: 10px; /* Add padding to create spacing between tickets */
+  margin: 10px 0; /* Add margin for vertical spacing between tickets */
+}
+
+/* CSS for success message */
+.success-message {
+  color: green;
+  font-weight: bold;
+}
+
+/* CSS for error message */
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.assign-button{
+  padding: 5px 10px;
+  margin: 10px;
+  font-size: 20px;
+  background-color:grey;
+}
+
+.edit-button{
+  padding: 5px 10px;
+  margin: 10px;
+  font-size: 20px;
+  background-color:grey;
+}
+
+.delete-button {
+  padding: 5px 10px;
+  margin: 10px;
+  font-size: 20px;
+  background-color:grey;
+}
+
+ul, ol {
+  list-style-type: none;
+}
+
+li {
+  list-style: none;
+}
