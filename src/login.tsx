@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Login = () => {
   // State to manage user input
 
@@ -54,7 +57,7 @@ const Login = () => {
   // Handle form submission
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    const login = 'http://localhost:8080/login';
+    const login = `${API_URL}/login`;
 
     const requestOptions = {
         method: 'POST',

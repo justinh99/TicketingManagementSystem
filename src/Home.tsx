@@ -6,6 +6,7 @@ import OpenTickets from './OpenTickets';
 import Login from './login';
 import { useNavigate } from 'react-router-dom';
 import AssignedTickets from './AssignedTickets';
+import HomeTickets from './HomeTickets';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,16 +57,16 @@ const Home = () => {
                 Welcome to ME 100 OH Queue. Please make a ticket on the queue
       </p>
       <TicketForm/>
+      <HomeTickets/>
       <div className="ticket-list-container">
-        <div className="ticket-list left-half">
+        {/* <div className="ticket-list left-half">
           <h3>Open Tickets</h3>
           <OpenTickets/>
         </div>
         <div className="ticket-list right-half">
           <h3>Assigned Tickets</h3>
           <AssignedTickets/>
-          {/* Display a list of assigned tickets here */}
-        </div>
+        </div> */}
       </div>
      </div>
     </div>

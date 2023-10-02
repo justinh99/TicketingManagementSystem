@@ -4,7 +4,7 @@ import './App.css'; // Import the CSS file for styling
 import StaffTicketList from './StaffOpenTicketList';
 import StaffTicketAssignedList from './StaffAssignedTicketList';
 
-
+const API_URL = process.env.REACT_APP_API_URL;
 const StaffAssignedTickets: React.FC = () => {
 
     // Define the Ticket interface
@@ -62,7 +62,7 @@ const StaffAssignedTickets: React.FC = () => {
   useEffect(() => {
     // Inside this useEffect, you can make the API request
     // using the fetch API.
-    const getAllTickets = 'http://localhost:8080/ticket/getAllAssignedTickets'; // Replace with your API URL
+    const getAllTickets = `${API_URL}/ticket/getAllAssignedTickets`; // Replace with your API URL
 
 
     // Define the options for the fetch request, including method, headers, and body.

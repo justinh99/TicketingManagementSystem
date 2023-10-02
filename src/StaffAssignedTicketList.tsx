@@ -1,5 +1,6 @@
 import React from 'react';
 
+const API_URL = process.env.REACT_APP_API_URL;
 class Ticket {
   public studentID: string;
   public studentName: string;
@@ -49,7 +50,7 @@ interface TicketListProps {
 // Handle form submission
 const handleAssignedTicket = (ticket: Ticket) => {
   
-  const assginedTicket = 'http://localhost:8080/ticket/assignTicket';
+  const assginedTicket = `${API_URL}/ticket/assignTicket`;
 
   const requestOptions = {
       method: 'POST',
@@ -115,7 +116,7 @@ function formatAssignedTime(assignedDate:Date) {
 
   // Handle form submission
   const handleDeleteTicket = (ticket: Ticket) => {
-    const deleteTicket = 'http://localhost:8080/ticket/closeTicket';
+    const deleteTicket = `${API_URL}/ticket/closeTicket`;
 
     const requestOptions = {
         method: 'POST',

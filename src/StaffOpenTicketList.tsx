@@ -1,5 +1,6 @@
 import React from 'react';
 
+const API_URL = process.env.REACT_APP_API_URL;
 class Ticket {
   public studentID: string;
   public studentName: string;
@@ -60,7 +61,7 @@ const handleAssignedTicket = (ticket: Ticket) => {
   if (accessTokenRow) {
     accessToken = accessTokenRow.split('=')[1];
   console.log(accessToken);
-  const assignTicket = 'http://localhost:8080/ticket/assignTicket';
+  const assignTicket = `${API_URL}/ticket/assignTicket`;
   const assignRequest = new AssignRequest();
    assignRequest.studentID = ticket.studentID;
    assignRequest.studentName = ticket.studentName;
@@ -102,7 +103,7 @@ const handleAssignedTicket = (ticket: Ticket) => {
 
   // Handle form submission
   const handleDeleteTicket = (ticket: Ticket) => {
-    const deleteTicket = 'http://localhost:8080/ticket/deleteTicket';
+    const deleteTicket = `${API_URL}/ticket/deleteTicket`;
 
     const requestOptions = {
         method: 'POST',

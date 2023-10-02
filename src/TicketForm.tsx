@@ -1,7 +1,8 @@
 // src/components/TicketForm.tsx
 import React, { useEffect, useState } from 'react';
 import './App.css'; // Import the CSS file for styling
-
+const API_URL = process.env.REACT_APP_API_URL;
+console.log(API_URL);
 // Define the Ticket interface
 interface Ticket {
   studentId: string;
@@ -65,7 +66,7 @@ const TicketForm: React.FC = () => {
 
   const handleButtonClick = () => {
     setIsSubmitClicked(true);
-    const createTicket = 'http://localhost:8080/ticket/createTicket'; // Replace with your API URL
+    const createTicket = `${API_URL}/ticket/createTicket`; // Replace with your API URL
 
 
     // Define the options for the fetch request, including method, headers, and body.
