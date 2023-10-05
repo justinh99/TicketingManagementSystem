@@ -147,9 +147,10 @@ function formatAssignedTime(assignedDate:Date) {
 
 
 const StaffTicketAssignedList: React.FC<TicketListProps> = ({ tickets }) => {
+  const sortedTickets = [...tickets].sort((a, b) => a.currentDate.getTime() - b.currentDate.getTime());
   return (
     <div className="ticket-form-container">
-        {tickets.map((ticket, index) => (
+        {sortedTickets.map((ticket, index) => (
                 <li key={ticket.studentID}>
                 <div className="ticket">
                     <strong>{index+1}. {ticket.studentName}</strong>

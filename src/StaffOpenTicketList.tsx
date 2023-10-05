@@ -47,19 +47,18 @@ interface TicketListProps {
   tickets: Ticket[];
 }
 
-const accessTokenRow = document.cookie
-.split('; ')
-.find(row => row.startsWith('accessToken='));
 
-let accessToken;
-if (accessTokenRow) {
-accessToken = accessTokenRow.split('=')[1];
-}
-console.log(accessToken);
 // Handle form submission
 const handleAssignedTicket = (ticket: Ticket) => {
+  const accessTokenRow = document.cookie.split('; ').find(row => row.startsWith('accessToken='));
+
+  let accessToken;
   if (accessTokenRow) {
-    accessToken = accessTokenRow.split('=')[1];
+  accessToken = accessTokenRow.split('=')[1];
+  }
+console.log(accessToken);
+  if (accessTokenRow) {
+  accessToken = accessTokenRow.split('=')[1];
   console.log(accessToken);
   const assignTicket = `${API_URL}/ticket/assignTicket`;
   const assignRequest = new AssignRequest();
@@ -85,6 +84,7 @@ const handleAssignedTicket = (ticket: Ticket) => {
       if (!response.ok) {
       throw new Error('Network response was not ok');
       }
+      window.location.reload();
       return;
   })
   .catch((error) => {
@@ -120,6 +120,7 @@ const handleAssignedTicket = (ticket: Ticket) => {
         if (!response.ok) {
         throw new Error('Network response was not ok');
         }
+        window.location.reload();
         return;
     })
     .catch((error) => {
@@ -160,9 +161,10 @@ const handleAssignedTicket = (ticket: Ticket) => {
 
 
 const StaffTicketList: React.FC<TicketListProps> = ({ tickets }) => {
+  const sortedTickets = [...tickets].sort((a, b) => a.currentDate.getTime() - b.currentDate.getTime());
   return (
     <div className="ticket-form-container">
-        {tickets.map((ticket, index) => (
+        {sortedTickets.map((ticket, index) => (
                 <li key={ticket.studentID}>
                 <div className="ticket">
                 <strong>{index+1}. {ticket.studentName}</strong>

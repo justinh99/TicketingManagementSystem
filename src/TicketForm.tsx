@@ -91,6 +91,7 @@ const TicketForm: React.FC = () => {
       .then((data) => {
         // Handle the API response data here
         console.log(data);
+        window.location.reload();
       })
       .catch((error) => {
         // Handle any errors that occurred during the fetch.
