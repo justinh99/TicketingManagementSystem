@@ -66,6 +66,7 @@ console.log(accessToken);
    assignRequest.studentName = ticket.studentName;
    assignRequest.ticketType = ticket.ticketType;
    assignRequest.description = ticket.description;
+   assignRequest.currentDate = ticket.currentDate;
    assignRequest.location = ticket.location;
    assignRequest.token = accessToken;
     console.log(assignRequest);
