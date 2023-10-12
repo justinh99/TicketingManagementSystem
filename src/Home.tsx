@@ -48,14 +48,24 @@ const Home = () => {
     
     <div className="App">
 
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      {/* <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <h1 style={{ textAlign: 'center', flex: '1' }} onClick = {() => navigate("/")}>ME100</h1>
         <button style={{ marginRight: '10px' }} onClick = {() => navigate('/login')} >Staff Login</button>
+      </header> */}
+      <header className="header">
+        <h1 onClick={() => navigate("/")}> ME100</h1>
+        <button style={{ marginRight: '10px' }} onClick={() => navigate('/login')}>Staff Login</button>
       </header>
+
      <div>
       <p style={{ fontSize: '1.5rem' }}>
                 Welcome to ME 100 OH Queue. Please make a ticket on the queue
       </p>
+      <p style={{ fontSize: '1 rem', color:'darkgreen', fontWeight: 700, padding: 30}}>
+                Please note that creating a ticket acknowledges that we gather your information to help you with your problem. 
+                We will not share your information with anyone outside of the ME 100 staff.
+      </p>
+
       <TicketForm/>
       <HomeTickets/>
       <div className="ticket-list-container">

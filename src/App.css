@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  justify-items: center;
 }
 
 .App-logo {
@@ -12,6 +13,19 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h1 {
+  text-align: center;
+  flex: 4;
+  padding-left: 7%;
+
+}
+
 
 .App-header {
   background-color: #282c34;
@@ -39,13 +53,37 @@
 
 /* src/components/TicketForm.css */
 .ticket-form-container {
-  margin-top: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f8f8f8;
-}
+    padding: 20px;
+    border-radius: 20px;
+  }
+  
+  .ticket-item {
+      list-style-type: none;
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      background-color: #fff;
+      border-radius: 20px;
+  }
+  
+  .ticket-header {
+      display: flex;
+      align-items: left;
+      justify-content: space-between;
+  }
+  
 
+  .ticket-title {
+      font-size: 20px;
+      margin-right: 0;
+  }
+  
+  .ticket-body p {
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+
+  }
 .form-group {
   margin-bottom: 10px;
 }
@@ -58,30 +96,34 @@ label {
 
 input[type="text"],
 textarea {
-  width: 100%;
+  width: 50%;
   padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  background-color: #ccc;
 }
 
 button {
-  background-color: #007bff;
-  color: white;
+  background-color: #fff;
+  /* color: white; */
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
   cursor: pointer;
+  font-size: 15px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #ccc;
 }
 
 .ticket-list-container {
   display: flex;
   justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 60px;
+  padding-right: 60px;
 }
 
 .ticket-list {
@@ -100,6 +142,8 @@ button:hover {
   border: 1px solid #ccc; /* Add a border around the ticket */
   padding: 10px; /* Add padding to create spacing between tickets */
   margin: 10px 0; /* Add margin for vertical spacing between tickets */
+  border-radius: 20px;
+  
 }
 
 /* CSS for success message */
@@ -119,6 +163,8 @@ button:hover {
   margin: 10px;
   font-size: 20px;
   background-color:grey;
+  border-radius: 10px;
+
 }
 
 .edit-button{
@@ -126,6 +172,8 @@ button:hover {
   margin: 10px;
   font-size: 20px;
   background-color:grey;
+  border-radius: 10px;
+
 }
 
 .delete-button {
@@ -133,6 +181,8 @@ button:hover {
   margin: 10px;
   font-size: 20px;
   background-color:grey;
+  border-radius: 10px;
+
 }
 
 ul, ol {
@@ -153,7 +203,7 @@ li {
   font-size: 20px;    /* Increased font size */
   border: none;
   cursor: pointer;
-  border-radius: 4px; /* Optional: adds rounded corners to the button */
+  border-radius: 10px; /* Optional: adds rounded corners to the button */
 }
 .buttonViewedStyle {
   background-color: black;
@@ -165,7 +215,7 @@ li {
   font-size: 20px;    /* Increased font size */
   border: none;
   cursor: pointer;
-  border-radius: 4px; /* Optional: adds rounded corners to the button */
+  border-radius: 10px; /* Optional: adds rounded corners to the button */
 }
 
 .buttonStyle:active {
