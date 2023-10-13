@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import StaffOpenTickets from './StaffOpenTickets';
 import StaffAssignedTickets from './StaffAssignedTickets';
 
-const StaffHome = () => {
+const TicketHistroy = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Your login logic here
@@ -45,19 +45,19 @@ const StaffHome = () => {
     <div className="App">
 
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <h1 style={{ textAlign: 'center', flex: '1' }} onClick = {() => navigate("/staffHome")}>ME100</h1>
+      <h1 style={{ textAlign: 'center', flex: '1' }} onClick = {() => navigate("/staffHome")}>Ticket History</h1>
         <button style={{ marginRight: '10px' }} onClick = {() => navigate('/tickethistory')} >Ticket History</button>
-        <button style={{ marginRight: '10px' }} onClick = {() => navigate('/staffStudentHome')} >Student Home</button>
+        <button style={{ marginRight: '10px' }} onClick = {() => navigate('/StaffHome')} >Staff Home</button>
         <button style={{ marginRight: '10px' }} onClick = {() => handleLogout()} >Log Out</button>
       </header>
      <div>
       <div className="ticket-list-container">
         <div className="ticket-list left-half">
-          <h3>Open Tickets</h3>
+          <h3>Deleted Tickets</h3>
           <StaffOpenTickets/>
         </div>
         <div className="ticket-list right-half">
-          <h3>Assigned Tickets</h3>
+          <h3>Closed Tickets</h3>
           <StaffAssignedTickets/>
           {/* Display a list of assigned tickets here */}
         </div>
@@ -68,4 +68,4 @@ const StaffHome = () => {
   );
 }
 
-export default StaffHome;
+export default TicketHistroy;

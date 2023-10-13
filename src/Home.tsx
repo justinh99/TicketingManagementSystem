@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TicketForm from './TicketForm';
@@ -33,6 +33,11 @@ const Home = () => {
   const handleTicketSubmit = (ticket:Ticket) => {
     setTickets((prevTickets:Ticket[]) => [...prevTickets, ticket]);
 };
+
+useEffect(() => {
+  document.title = "Home";
+}, []);
+
 
   return (
     // <div className="App">

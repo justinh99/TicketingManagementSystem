@@ -81,7 +81,6 @@ const handleAssignedTicket = (ticket: Ticket) => {
 const handleOpenTicket = (ticket: Ticket) => {
   
   const openTicket = `${API_URL}/ticket/openTicket`;
-
   const requestOptions = {
       method: 'POST',
       headers: {
@@ -199,7 +198,7 @@ const StaffTicketAssignedList: React.FC<TicketListProps> = ({ tickets }) => {
                     <p>TA: {ticket.TA}</p>
                     <div className="ticket-buttons">
                         <button className="assign-button" onClick={()=>handleOpenTicket(ticket)}>Open Ticket</button>
-                        <button className="edit-button" onClick={()=>handleAssignedTicket(ticket)}>Edit Ticket</button>
+                        {/* <button className="edit-button" onClick={()=>handleAssignedTicket(ticket)}>Edit Ticket</button> */}
                         <button className="delete-button" onClick={()=>handleDeleteTicket(ticket)}>Close Ticket</button>
                     </div>
                 </div>

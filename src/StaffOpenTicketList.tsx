@@ -177,7 +177,7 @@ const StaffTicketList: React.FC<TicketListProps> = ({ tickets }) => {
                     <p>Created Time: {formatTime(ticket.currentDate)}</p>
                     <div className="ticket-buttons">
                         <button className="assign-button" onClick={()=>handleAssignedTicket(ticket)}>Assign Ticket</button>
-                        <button className="edit-button">Edit Ticket</button>
+                        {/* <button className="edit-button">Edit Ticket</button> */}
                         <button className="delete-button" onClick={()=>handleDeleteTicket(ticket)}>Delete Ticket</button>
                     </div>
                 </div>
