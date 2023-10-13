@@ -59,6 +59,8 @@ const handleAssignedTicket = (ticket: Ticket) => {
       },
       body: JSON.stringify(ticket), 
     };
+
+
     // Make the API request
   fetch(assginedTicket, requestOptions)
   .then((response) => {
@@ -77,9 +79,9 @@ const handleAssignedTicket = (ticket: Ticket) => {
   // Add your login logic here
 };
 
-// Handle form submission
+
 const handleOpenTicket = (ticket: Ticket) => {
-  
+
   const openTicket = `${API_URL}/ticket/openTicket`;
   const requestOptions = {
       method: 'POST',
@@ -99,17 +101,10 @@ const handleOpenTicket = (ticket: Ticket) => {
       return;
   })
   .catch((error) => {
-      // Handle any errors that occurred during the fetch.
-      console.error('Fetch error:', error);
+    // Handle any errors that occurred during the fetch.
+    console.error('Fetch error:', error);
   });
-
-
-  // Add your login logic here
 };
-
-
-
-
 
 function formatDate(date:Date) {
   const day = date.getDate();

@@ -38,11 +38,11 @@ const TicketForm: React.FC = () => {
 
     // Clear the form fields
     setTicketData({
-        studentId: '',
-        studentName: '',
-        ticketType: '',
-        description: '',
-        location: '',
+      studentId: '',
+      studentName: '',
+      ticketType: '',
+      description: '',
+      location: '',
     });
   };
 
@@ -125,6 +125,7 @@ const TicketForm: React.FC = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="ticketType">Ticket Type</label>
           <input
@@ -136,6 +137,7 @@ const TicketForm: React.FC = () => {
             required
           />
         </div>
+        
         <div className="form-group">
           <label htmlFor="description">Description</label>
           <textarea
@@ -157,7 +159,7 @@ const TicketForm: React.FC = () => {
             required
           />
         </div>
-        <button onClick={handleButtonClick}>Submit</button>
+        <button onClick={handleButtonClick}>Submit → </button>
       </form>
     </div>
   );
