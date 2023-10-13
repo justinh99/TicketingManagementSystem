@@ -69,13 +69,15 @@ const AssignedTicketList: React.FC<TicketListProps> = ({ tickets }) => {
   return (
     <div className="ticket-form-container">
         {sortedTickets.map((ticket, index) => (
-                <li key={ticket.studentID}>
-                <div className="ticket">
-                    <strong>{index + 1}. {ticket.studentName}</strong>
-                    <p>Ticket Type: {ticket.ticketType}</p>
-                    <p>Location: {ticket.location}</p>
-                    <p>Created Time: {formatTime(ticket.currentDate)}</p>
-                    <p>TA: {ticket.TA}</p>
+            <li key={ticket.studentID} className="ticket-item">
+                <div className="ticket-header">
+                    <h2 className="ticket-title">{ticket.studentName}</h2>
+                </div>
+                <div className="ticket-body">
+                    <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
+                    <p><strong>Location:</strong> {ticket.location}</p>
+                    <p><strong>Created Time:</strong> {formatTime(ticket.currentDate)}</p>
+                    <p><strong>TA: {ticket.TA}</strong></p>
                     <div className="ticket-buttons">
                     </div>
                 </div>
@@ -84,5 +86,6 @@ const AssignedTicketList: React.FC<TicketListProps> = ({ tickets }) => {
     </div>
   );
 };
+
 
 export default AssignedTicketList;

@@ -66,7 +66,6 @@ console.log(accessToken);
    assignRequest.studentName = ticket.studentName;
    assignRequest.ticketType = ticket.ticketType;
    assignRequest.description = ticket.description;
-   assignRequest.currentDate = ticket.currentDate;
    assignRequest.location = ticket.location;
    assignRequest.token = accessToken;
     console.log(assignRequest);
@@ -177,7 +176,7 @@ const StaffTicketList: React.FC<TicketListProps> = ({ tickets }) => {
                     <p>Created Time: {formatTime(ticket.currentDate)}</p>
                     <div className="ticket-buttons">
                         <button className="assign-button" onClick={()=>handleAssignedTicket(ticket)}>Assign Ticket</button>
-                        {/* <button className="edit-button">Edit Ticket</button> */}
+                        <button className="edit-button">Edit Ticket</button>
                         <button className="delete-button" onClick={()=>handleDeleteTicket(ticket)}>Delete Ticket</button>
                     </div>
                 </div>

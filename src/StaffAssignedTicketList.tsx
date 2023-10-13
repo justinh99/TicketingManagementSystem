@@ -59,13 +59,14 @@ const handleAssignedTicket = (ticket: Ticket) => {
       },
       body: JSON.stringify(ticket), 
     };
+
+
     // Make the API request
   fetch(assginedTicket, requestOptions)
   .then((response) => {
       if (!response.ok) {
       throw new Error('Network response was not ok');
       }
-      window.location.reload();
       return;
   })
   .catch((error) => {
@@ -76,40 +77,6 @@ const handleAssignedTicket = (ticket: Ticket) => {
 
   // Add your login logic here
 };
-
-// Handle form submission
-const handleOpenTicket = (ticket: Ticket) => {
-  
-  const openTicket = `${API_URL}/ticket/openTicket`;
-  const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(ticket), 
-    };
-
-    // Make the API request
-  fetch(openTicket, requestOptions)
-  .then((response) => {
-      if (!response.ok) {
-      throw new Error('Network response was not ok');
-      }
-      window.location.reload();
-      return;
-  })
-  .catch((error) => {
-      // Handle any errors that occurred during the fetch.
-      console.error('Fetch error:', error);
-  });
-
-
-  // Add your login logic here
-};
-
-
-
-
 
 function formatDate(date:Date) {
   const day = date.getDate();
@@ -166,7 +133,6 @@ function formatAssignedTime(assignedDate:Date) {
         if (!response.ok) {
         throw new Error('Network response was not ok');
         }
-        window.location.reload();
         return;
     })
     .catch((error) => {
@@ -197,8 +163,8 @@ const StaffTicketAssignedList: React.FC<TicketListProps> = ({ tickets }) => {
                     <p>Assigned Time: {formatAssignedTime(ticket.assignedDate)}</p>
                     <p>TA: {ticket.TA}</p>
                     <div className="ticket-buttons">
-                        <button className="assign-button" onClick={()=>handleOpenTicket(ticket)}>Open Ticket</button>
-                        {/* <button className="edit-button" onClick={()=>handleAssignedTicket(ticket)}>Edit Ticket</button> */}
+                        <button className="assign-button" onClick={()=>handleAssignedTicket(ticket)}>Open Ticket</button>
+                        <button className="edit-button" onClick={()=>handleAssignedTicket(ticket)}>Edit Ticket</button>
                         <button className="delete-button" onClick={()=>handleDeleteTicket(ticket)}>Close Ticket</button>
                     </div>
                 </div>
