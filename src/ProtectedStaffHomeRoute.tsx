@@ -6,7 +6,7 @@ import Login from './login';
 import StaffHome from './StaffHome';
 
 
-const ProtectedRoute = () => {
+const ProtectedStaffHomeRoute = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const accessTokenRow = document.cookie
@@ -26,4 +26,4 @@ const ProtectedRoute = () => {
   }
 };
 
-export default ProtectedRoute;
+export default ProtectedStaffHomeRoute;
