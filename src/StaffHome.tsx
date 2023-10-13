@@ -51,6 +51,9 @@ const StaffHome = () => {
         <button style={{ marginRight: '10px' }} onClick = {() => handleLogout()} >Log Out</button>
       </header>
      <div>
+      <p style={{ fontSize: '1.5rem' }}>
+                Welcome to ME 100 OH Queue. Please make a ticket on the queue
+      </p>
       <div className="ticket-list-container">
         <div className="ticket-list left-half">
           <h3>Open Tickets</h3>
