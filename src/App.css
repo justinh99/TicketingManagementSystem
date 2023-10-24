@@ -59,11 +59,12 @@
   
   .ticket-item {
       list-style-type: none;
-      padding: 10px 20px;
+      padding: 10px 50px;
       border: 1px solid #ccc;
       margin-bottom: 15px;
       background-color: #fff;
       border-radius: 20px;
+      display: block;
   }
   
   .ticket-header {
