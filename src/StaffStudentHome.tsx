@@ -7,9 +7,18 @@ import Login from './login';
 import { useNavigate } from 'react-router-dom';
 import AssignedTickets from './AssignedTickets';
 
+type UserType = {
+  name: string;
+  
+};
+
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<UserType | null>(null); // New state for user
 
+  const handleUserLogin = (user: UserType) => {
+    setUser(user); // Set the user data on login
+  };
   // Your login logic here
   const handleLogin = () => {
     // Implement your login logic here (e.g., check credentials)
@@ -65,7 +74,7 @@ const handleLogout = () => {
       <p style={{ fontSize: '1.5rem' }}>
                 Welcome to ME 100 OH Queue. Please make a ticket on the queue
       </p>
-      <TicketForm/>
+      <TicketForm userData={user} />
       <div className="ticket-list-container">
         <div className="ticket-list left-half">
           <h3>Open Tickets</h3>

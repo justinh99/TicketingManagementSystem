@@ -11,24 +11,42 @@ interface Ticket {
   description: string;
   location: string;
 }
-
+type UserType = {
+  name: string;
+  
+};
 interface TicketFormProps {
   onTicketSubmit: () => void;  // Callback function to trigger a re-render
+  
+}
+interface TicketFormUser {
+  userData: UserType | null;
 }
 
-const TicketForm: React.FC = () => {
+const TicketForm: React.FC<TicketFormUser> = ({ userData }) => {
   const [ticketData, setTicketData] = useState<Ticket>({
     studentId: '',
-    studentName: '',
+    studentName: localStorage.getItem('userName') || '', 
     ticketType: '',
     description: '',
     location: '',
   });
 
+  useEffect(() => {
+    if (userData) {
+      setTicketData((prevData) => ({
+        ...prevData,
+        studentName: userData.name, // Assuming the name is stored here; adjust if needed
+      }));
+    }
+  }, [userData]);
+
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Create a new Ticket object when the form is submitted
+    
     const newTicket: Ticket = {
       ...ticketData,
     };
@@ -65,6 +83,17 @@ const TicketForm: React.FC = () => {
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
   const handleButtonClick = () => {
+    
+    if (!userData ) {
+      alert("You must be logged in to submit a ticket.");
+      return;
+    }
+
+    const { studentId, studentName, ticketType, description, location } = ticketData;
+    if (!studentId || !studentName || !ticketType || !description || !location) {
+      alert("Please fill in all fields before submitting.");
+      return;
+    }
     setIsSubmitClicked(true);
     const createTicket = `${API_URL}/ticket/createTicket`; // Replace with your API URL
 
@@ -114,7 +143,7 @@ const TicketForm: React.FC = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="form-group" >
           <label htmlFor="studentName">Student Name</label>
           <input
             type="text"
@@ -159,6 +188,7 @@ const TicketForm: React.FC = () => {
             required
           />
         </div>
+
         <button onClick={handleButtonClick}>Submit → </button>
       </form>
     </div>
