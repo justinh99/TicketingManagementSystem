@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import jwt_decode from 'jwt-decode';
 import { googleLogout } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
 
 type UserType = {
   name: string;
@@ -13,6 +14,7 @@ type LoginButtonProps = {
 };
 const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
   const [user, setUser] = useState<UserType | null>(null);
+  const navigate = useNavigate();
 
   const handleLoginSuccess = (credentialResponse:any) => {
     console.log(credentialResponse);
@@ -24,7 +26,8 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
     setUser(userObject);
     console.log(userObject);
     onLoginSuccess(userObject); 
-    localStorage.setItem('userName', userObject.name); 
+    localStorage.setItem('userName', userObject.name);
+    navigate("/privacyNotice");
   };
   
   const handleLoginFailure = () => {
@@ -38,6 +41,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
     setUser(null);
     console.log("User has been logged out!");
     window.location.reload();
+    navigate('/')
   };
   
   useEffect(() => {
@@ -56,7 +60,6 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
     <GoogleOAuthProvider clientId="302444134208-6mfllvoh1njd5ctukbtbb7441fcn5utj.apps.googleusercontent.com">
       {user ? (
         <>
-          <h1>Hello, {user.name}!</h1>
           <button onClick={handleLogout}>
             Logout
           </button>

@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import AssignedTickets from './AssignedTickets';
 import HomeTickets from './HomeTickets';
 import LoginButton from './LoginButton';
+import jwt_decode from 'jwt-decode';
 type UserType = {
   name: string;
   
 };
-const Home = () => {
+const LoggedInHome = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<UserType | null>(null); // New state for user
 
@@ -44,6 +45,17 @@ const Home = () => {
 
 useEffect(() => {
   document.title = "Home";
+  const token = localStorage.getItem('userToken');
+  if (token) {
+    try {
+      const userObject: UserType = jwt_decode<UserType>(token);
+      setUser(userObject);
+    } catch (e) {
+      console.error("Token validation failed", e);
+      // Optional: Handle token validation failure (e.g., token expired), maybe clean up localStorage
+    }
+  }
+  console.log(user)
 }, []);
 
   return (
@@ -53,7 +65,7 @@ useEffect(() => {
         {/* Pass the function to LoginButton */}
         <LoginButton onLoginSuccess={handleUserLogin} />
       </header>
-
+      {user ? <p style={{ fontSize: '1.5rem' }}>Hi, {user.name}!</p> : <p></p>}
      <div>
       <p style={{ fontSize: '1.5rem' }}>
                 Welcome to ME 100 OH Queue. Please make a ticket on the queue
@@ -62,6 +74,8 @@ useEffect(() => {
                 Please note that creating a ticket acknowledges that we gather your information to help you with your problem. 
                 We will not share your information with anyone outside of the ME 100 staff.
       </p>
+
+      <TicketForm userData={user} />
       <HomeTickets/>
       <div className="ticket-list-container">
       </div>
@@ -71,4 +85,4 @@ useEffect(() => {
   );
 }
 
-export default Home;
+export default LoggedInHome;
