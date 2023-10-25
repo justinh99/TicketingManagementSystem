@@ -46,7 +46,7 @@ const StaffHome = () => {
 
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <h1 style={{ textAlign: 'center', flex: '1' }} onClick = {() => navigate("/staffHome")}>ME100</h1>
-        <button style={{ marginRight: '10px' }} onClick = {() => navigate('/staffHome')} >Ticket History</button>
+        <button style={{ marginRight: '10px' }} onClick = {() => navigate('/tickethistory')} >Ticket History</button>
         <button style={{ marginRight: '10px' }} onClick = {() => navigate('/staffStudentHome')} >Student Home</button>
         <button style={{ marginRight: '10px' }} onClick = {() => handleLogout()} >Log Out</button>
       </header>

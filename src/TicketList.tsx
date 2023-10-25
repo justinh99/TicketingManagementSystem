@@ -67,7 +67,7 @@ const TicketList: React.FC<TicketListProps> = ({ tickets }) => {
         {sortedTickets.map((ticket, index) => (
             <li key={ticket.studentID} className="ticket-item">
                 <div className="ticket-header">
-                    <h2 className="ticket-title">{ticket.studentName}</h2>
+                    <h2 className="ticket-title">{index + 1}. {ticket.studentName}</h2>
                 </div>
                 <div className="ticket-body">
                     <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
