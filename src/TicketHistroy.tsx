@@ -31,17 +31,6 @@ const TicketHistroy = () => {
 
 
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     {/* <img src={logo} className="App-logo" alt="logo" /> */}
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-
-    //   </header>
-    // </div>
-
-    
     <div className="App">
 
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -64,7 +53,6 @@ const TicketHistroy = () => {
       </div>
      </div>
     </div>
-
   );
 }
 

@@ -6,8 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 type UserType = {
   name: string;
-  
+  email: string;
 };
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 type LoginButtonProps = {
   onLoginSuccess: (user: UserType) => void;  // Function passed in from the parent component
@@ -16,18 +18,34 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const navigate = useNavigate();
 
-  const handleLoginSuccess = (credentialResponse:any) => {
-    console.log(credentialResponse);
+  //Handle login success
+  const handleLoginSuccess = async (credentialResponse:any) => {
+    // console.log(credentialResponse);
     
     const token = credentialResponse.credential;
     localStorage.setItem('userToken', token); // Storing the token in localStorage
     const userObject: UserType = jwt_decode(token);
-    console.log(userObject);
+    // console.log(userObject);
     setUser(userObject);
-    console.log(userObject);
     onLoginSuccess(userObject); 
     localStorage.setItem('userName', userObject.name);
     navigate("/privacyNotice");
+    const email = userObject.email;  // Or wherever the email is stored in your user object
+    try {
+
+      const login = `${API_URL}/checkStaff?email=${encodeURIComponent(email)}`;
+
+      // No body is required, and the method defaults to 'GET', so it's not needed unless you're changing it.
+      const response = await fetch(login);
+      console.log("above is test");
+      console.log(response);
+      // First, check if the response status is in the 200 range
+
+    } catch (error) {
+      console.error('Failed to check staff status:', error);
+      // Additional error handling
+    }
+    
   };
   
   const handleLoginFailure = () => {

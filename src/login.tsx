@@ -33,9 +33,6 @@ const Login = () => {
       this.token = token;
     }
   }
-
-
-
   const navigate = useNavigate();
 
   const [loginStatus, setLoginStatus] = useState<LoginStatus>();
@@ -85,15 +82,13 @@ const Login = () => {
         data.error
         );
         setLoginStatus(loginStatus);
-        //document.cookie = `token=${data.token}; secure; samesite=strict`;
         if (loginStatus.data.loginStatus === 'succeed') {
             setLoginCookie(loginStatus.data.token);
             setIsAuthenticated(true);
-            navigate('/staffHome'); // Redirect to StaffScreen
+            navigate('/staffHome');
         }
     })
     .catch((error) => {
-        // Handle any errors that occurred during the fetch.
         console.error('Fetch error:', error);
     });
 
