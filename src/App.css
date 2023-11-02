@@ -26,7 +26,6 @@
 
 }
 
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -58,14 +57,15 @@
   }
   
   .ticket-item {
-      list-style-type: none;
-      padding: 10px 20px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
-      background-color: #fff;
-      border-radius: 20px;
-  }
-  
+    list-style-type: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-radius: 20px;
+    display: block;
+}
+
   .ticket-header {
       display: flex;
       align-items: left;
@@ -119,11 +119,13 @@ button:hover {
   background-color: #ccc;
 }
 
-.ticket-list-container {
-  display: flex;
-  justify-content: space-between;
-  padding-left: 60px;
-  padding-right: 60px;
+.tickets-container {
+  max-width: 800px; /* or any other value that suits your design */
+  margin: 0 auto; /* centers the container */
+  padding: 20px; /* adds some space inside the container */
+  border: 1px solid #ccc; /* adds a border around the container */
+  border-radius: 10px; /* optional: rounds the corners */
+  background-color: #f9f9f9; /* optional: adds a background color */
 }
 
 .ticket-list {
@@ -225,3 +227,129 @@ li {
 .buttonStyle:hover {
   background-color: darkgrey; /* Optional: slight color change on hover for better UX */
 }
+
+/* ... your existing CSS ... */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+}
+.privacy-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #F4F4F4;
+  font-family: 'Arial', sans-serif;
+}
+
+.privacy-content {
+  width: 80%;
+  max-width: 500px;
+  background: white;
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+}
+
+.privacy-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.privacy-user-info {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.privacy-text-bold {
+  font-weight: bold;
+}
+
+.privacy-button {
+  display: inline-block;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.privacy-confirm {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.privacy-cancel {
+  background-color: #f44336;
+  color: white;
+  border: 1px solid #f44336;
+}
+
+.privacy-button:hover {
+  opacity: 0.9;
+}
+
+/* ... existing styles ... */
+
+
+.gradient-header {
+  background: linear-gradient(#66a1d5 0%,#ffff
+   100%);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.header-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.left-header,
+.right-header {
+  display: flex;
+  align-items: center;
+}
+
+
+.user-greeting {
+  font-size: 1rem;
+  margin-right: 10px;
+}
+
+.create-ticket-button, .logout-button {
+  margin-right: 10px;
+}
+
+.login-button-container {
+  padding: 10px;
+}
+
+/* ... remaining styles ... */

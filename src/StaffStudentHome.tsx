@@ -1,94 +1,88 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import TicketForm from './TicketForm';
 import OpenTickets from './OpenTickets';
-import Login from './login';
-import { useNavigate } from 'react-router-dom';
 import AssignedTickets from './AssignedTickets';
+import { useNavigate } from 'react-router-dom';
+import LoginButton from './LoginButton';
+import jwt_decode from 'jwt-decode';
 
 type UserType = {
   name: string;
-  
 };
 
 const Home = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<UserType | null>(null); // New state for user
-
-  const handleUserLogin = (user: UserType) => {
-    setUser(user); // Set the user data on login
-  };
-  // Your login logic here
-  const handleLogin = () => {
-    // Implement your login logic here (e.g., check credentials)
-    // If login is successful, set 'isLoggedIn' to true
-    setIsLoggedIn(true);
-  };
-
-  class Ticket {
-    public studentID: string | undefined;
-    public studentName: string | undefined;
-    public ticketType: string | undefined;
-    public description: string | undefined;
-    public location: string | undefined;
-    public currentDate: Date | undefined;
-  }
-
+  const [user, setUser] = useState<UserType | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('openTickets');
   const navigate = useNavigate();
-  const [tickets, setTickets] = useState<Ticket[]>([]); 
 
-  const handleTicketSubmit = (ticket:Ticket) => {
-    setTickets((prevTickets:Ticket[]) => [...prevTickets, ticket]);
-};
+  useEffect(() => {
+    document.title = "Home";
+  }, [navigate]);
 
-const handleLogout = () => {
-  // Clear authentication-related data (e.g., tokens, session data)
-  // For example, remove the accessToken cookie:
-  document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    setUser(null);
+    navigate('/');
+  };
 
-  // Redirect to the login page (or any other destination)
-  navigate('/');
-};
+  const handleTabChange = (tab: React.SetStateAction<string>) => {
+    setActiveTab(tab);
+  };
+
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     {/* <img src={logo} className="App-logo" alt="logo" /> */}
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-
-    //   </header>
-    // </div>
-
-    
     <div className="App">
-
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <h1 style={{ textAlign: 'center', flex: '1' }} onClick = {() => navigate("/")}>ME100</h1>
-        <button style={{ marginRight: '10px' }} onClick = {() => navigate('/staffHome')} >Ticket History</button>
-        <button style={{ marginRight: '10px' }} onClick = {() => navigate('/staffHome')} >Staff Home</button>
-        <button style={{ marginRight: '10px' }} onClick = {() => handleLogout()} >Log Out</button>
-      </header>
-     <div>
-      <p style={{ fontSize: '1.5rem' }}>
-                Welcome to ME 100 OH Queue. Please make a ticket on the queue
-      </p>
-      <TicketForm userData={user} />
-      <div className="ticket-list-container">
-        <div className="ticket-list left-half">
-          <h3>Open Tickets</h3>
-          <OpenTickets/>
+      <header className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ flex: 1 }}></div>
+        <h1 style={{ flex: 1, textAlign: 'center' }} onClick={() => navigate("/")}>ME100</h1>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          {user ? (
+            <>
+              <span style={{ fontSize: '1.5rem', marginRight: '10px' }}>Hi, {user.name}!</span>
+              <button onClick={handleLogout}>Log Out</button>
+            </>
+          ) : (
+            <LoginButton onLoginSuccess={setUser} />
+          )}
         </div>
-        <div className="ticket-list right-half">
-          <h3>Assigned Tickets</h3>
-          <AssignedTickets/>
-          {/* Display a list of assigned tickets here */}
+      </header>
+      <div>
+        <p style={{ fontSize: '1.5rem' }}>
+          Welcome to ME 100 OH Queue. Please make a ticket on the queue
+        </p>
+        <p style={{ fontSize: '1rem', color: 'darkgreen', fontWeight: 700, padding: 30 }}>
+          Please note that creating a ticket acknowledges that we gather your information to help you with your problem.
+          We will not share your information with anyone outside of the ME 100 staff.
+        </p>
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+          <div
+            style={{
+              padding: '10px 20px',
+              cursor: 'pointer',
+              borderBottom: activeTab === 'openTickets' ? '2px solid black' : 'none'
+            }}
+            onClick={() => handleTabChange('openTickets')}
+          >
+            Open Tickets
+          </div>
+          <div
+            style={{
+              padding: '10px 20px',
+              cursor: 'pointer',
+              borderBottom: activeTab === 'assignedTickets' ? '2px solid black' : 'none'
+            }}
+            onClick={() => handleTabChange('assignedTickets')}
+          >
+            Assigned Tickets
+          </div>
+        </div>
+        <div className="tickets-container">
+          {activeTab === 'openTickets' && <OpenTickets />}
+          {activeTab === 'assignedTickets' && <AssignedTickets />}
         </div>
       </div>
-     </div>
     </div>
-
   );
 }
 

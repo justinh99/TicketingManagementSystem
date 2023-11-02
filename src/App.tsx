@@ -12,6 +12,9 @@ import StaffStudentHome from './StaffStudentHome';
 import ProtectedStaffHomeRoute from './ProtectedStaffHomeRoute';
 import ProtectedStaffStudentHomeRoute from './ProtectedStaffStudentHomeRoute';
 import ProtectedTicketHistroyRoute from './ProtectedTicketHistoryRoute';
+import ProtectedPrivacyNoticeRoute from './ProtectedPrivacyNoticeRoute';
+import ProtectedLoggedInHomeRoute from './ProtectedLoggedInHomeRoute';
+import LoggedInHome from './Home-LoggedIn';
 
 
 function App() {
@@ -26,6 +29,8 @@ function App() {
             <Route path = "/staffHome" element={<ProtectedStaffHomeRoute/>} />
             <Route path = "/staffStudentHome" element = {<ProtectedStaffStudentHomeRoute/>}/>
             <Route path = "/tickethistory" element = {<ProtectedTicketHistroyRoute/>}/>
+            <Route path = "/privacyNotice" element = {<ProtectedPrivacyNoticeRoute/>}/>
+            <Route path = "/loggedInHome" element = {<LoggedInHome/>}/>
             <Route path = "*" element ={<Navigate to ="/"/>}></Route>
           </Routes>
         </BrowserRouter>
