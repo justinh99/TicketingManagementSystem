@@ -57,7 +57,7 @@ function formatTime(date:Date) {
   const Totalminutes = Math.floor(timeDifference % 3600000 / 60000); // Convert to seconds
   const Totalseconds = Math.floor(timeDifference %  60000 / 1000); // Convert to seconds
 
-  return `${Totalhours} Hours, ${Totalminutes} Minutes, ${Totalseconds} Seconds ago`;
+  return `${Totalhours} Hours, ${Totalminutes} Minutes`;
 }
 
 const TicketList: React.FC<TicketListProps> = ({ tickets }) => {

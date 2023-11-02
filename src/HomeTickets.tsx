@@ -8,7 +8,7 @@ const HomeTickets: React.FC = () => {
     return (
         <div>
             {/* Buttons to toggle between Open and Assigned tickets */}
-            <button className={view == "all" ? 'buttonViewedStyle' : 'buttonStyle'}  onClick={() => setView('all')}>All Tickets</button>
+            {/* <button className={view == "all" ? 'buttonViewedStyle' : 'buttonStyle'}  onClick={() => setView('all')}>All Tickets</button> */}
             <button className={view == "open" ? 'buttonViewedStyle' : 'buttonStyle'}  onClick={() => setView('open')}>Open Tickets</button>
             <button className={view == "assigned" ? 'buttonViewedStyle' : 'buttonStyle'} onClick={() => setView('assigned')}>Assigned Tickets</button>
 
