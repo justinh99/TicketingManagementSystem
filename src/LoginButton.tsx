@@ -36,7 +36,13 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
       const login = `${API_URL}/checkStaff?email=${encodeURIComponent(email)}`;
 
       // No body is required, and the method defaults to 'GET', so it's not needed unless you're changing it.
-      const response = await fetch(login);
+      const response = await fetch(login, {
+        method: 'GET', // This is optional since GET is the default method
+        credentials: 'include', // Include credentials in the request
+        headers: {
+          'Content-Type': 'application/json' // If your backend expects JSON
+        }
+      });
       console.log("above is test");
       console.log(response);
       // First, check if the response status is in the 200 range

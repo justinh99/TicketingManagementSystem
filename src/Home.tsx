@@ -38,6 +38,7 @@ const Home = () => {
           ) : (
             <LoginButton onLoginSuccess={setUser} />
           )}
+          <button style={{ marginRight: '10px' , marginLeft: '10px'}} onClick={() => navigate('/login')}>Staff Login</button>
         </div>
       </header>
       <div>

@@ -128,6 +128,13 @@ button:hover {
   background-color: #f9f9f9; /* optional: adds a background color */
 }
 
+.ticket-list-container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
 .ticket-list {
   width: 48%; /* Adjust the width as needed to leave space for margins and gaps */
 }
@@ -312,11 +319,6 @@ li {
 
 /* ... existing styles ... */
 
-
-.gradient-header {
-  background: linear-gradient(#66a1d5 0%,#ffff
-   100%);
-}
 
 .header {
   display: flex;
