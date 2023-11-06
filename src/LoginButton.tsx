@@ -29,23 +29,36 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
     setUser(userObject);
     onLoginSuccess(userObject); 
     localStorage.setItem('userName', userObject.name);
+    localStorage.setItem('email', userObject.email);
     navigate("/privacyNotice");
     const email = userObject.email;  // Or wherever the email is stored in your user object
     try {
 
-      const login = `${API_URL}/checkStaff?email=${encodeURIComponent(email)}`;
+      const login = `${API_URL}/users/checkStaff?email=${encodeURIComponent(email)}`;
 
       // No body is required, and the method defaults to 'GET', so it's not needed unless you're changing it.
       const response = await fetch(login, {
         method: 'GET', // This is optional since GET is the default method
-        credentials: 'include', // Include credentials in the request
         headers: {
-          'Content-Type': 'application/json' // If your backend expects JSON
-        }
+          'Content-Type': 'application/json',
+        },
       });
       console.log("above is test");
       console.log(response);
       // First, check if the response status is in the 200 range
+      if (response.ok) {
+        const isStaff = await response.json(); // Assuming the response is just a boolean
+        console.log("Is user staff:", isStaff);
+        if (isStaff) {
+          localStorage.setItem('isStaff', isStaff);
+          navigate("/StaffHome"); // Replace with your actual staff home route
+        } else {
+          navigate("/privacyNotice"); // Non-staff users get redirected here
+        }
+      } else {
+        // Handle non-200 responses here
+        console.error("Failed to fetch staff status:", response.statusText);
+      }
 
     } catch (error) {
       console.error('Failed to check staff status:', error);

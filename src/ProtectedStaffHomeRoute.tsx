@@ -9,16 +9,10 @@ import StaffHome from './StaffHome';
 const ProtectedStaffHomeRoute = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const accessTokenRow = document.cookie
-    .split('; ')
-    .find(row => row.startsWith('accessToken='));
+  const isStaff = localStorage.getItem('isStaff') === 'true';
 
-  let accessToken;
-  if (accessTokenRow) {
-    accessToken = accessTokenRow.split('=')[1];
-  }
-  console.log(accessToken);
-  if (accessToken) {
+  console.log(isStaff);
+  if (isStaff) {
     return <StaffHome/>;
   } else {
     // Redirect to the login page if not authenticated
