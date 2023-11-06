@@ -26,10 +26,14 @@ const Home = () => {
 
   return (
     <div className="App">
-      <header className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ flex: 1 }}></div>
-        <h1 style={{ flex: 1, textAlign: 'center' }} onClick={() => navigate("/")}>ME100</h1>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+      <header className="header" style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', width: '150px' }}>
+          <img src="/logo.png" alt="Your Logo" style={{ width: '100%', height: 'auto' }} />
+        </div>
+        <h1 style={{ flex: 1, textAlign: 'center', fontSize: '50px', marginRight: '150px' }} onClick={() => navigate("/")}>
+          ME100
+        </h1>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', width: '150px' }}>
           {user ? (
             <>
               <span style={{ fontSize: '1.5rem', marginRight: '10px' }}>Hi, {user.name}!</span>
