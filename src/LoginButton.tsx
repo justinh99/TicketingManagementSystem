@@ -30,7 +30,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
     onLoginSuccess(userObject); 
     localStorage.setItem('userName', userObject.name);
     localStorage.setItem('email', userObject.email);
-    navigate("/privacyNotice");
+    //navigate("/privacyNotice");
     const email = userObject.email;  // Or wherever the email is stored in your user object
     try {
 

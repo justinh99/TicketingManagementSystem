@@ -7,6 +7,7 @@ import Login from './login';
 import { useNavigate } from 'react-router-dom';
 import StaffOpenTickets from './StaffOpenTickets';
 import StaffAssignedTickets from './StaffAssignedTickets';
+import { googleLogout } from '@react-oauth/google';
 
 const StaffHome = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,19 +18,25 @@ const StaffHome = () => {
     // If login is successful, set 'isLoggedIn' to true
     setIsLoggedIn(true);
   };
+  const navigate = useNavigate();
 
+  // const handleLogout = () => {
+  //   // Clear authentication-related data (e.g., tokens, session data)
+  //   // For example, remove the accessToken cookie:
+  //   document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+  //   // Redirect to the login page (or any other destination)
+  //   navigate('/');
+  // };
   const handleLogout = () => {
-    // Clear authentication-related data (e.g., tokens, session data)
-    // For example, remove the accessToken cookie:
-    document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-    // Redirect to the login page (or any other destination)
-    navigate('/');
+    googleLogout();
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('userName');
+    console.log("User has been logged out!");
+    //window.location.reload();
+    navigate('/')
   };
 
-  
-
-  const navigate = useNavigate();
 
 
   return (
