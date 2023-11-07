@@ -180,16 +180,15 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="studentName">Student Name</label>
-                <input
-                  type="text"
-                  id="studentName"
-                  name="studentName"
-                  value={ticketData.studentName}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+              <label htmlFor="studentName">Student Name</label>
+              <input
+                type="text"
+                id="studentName"
+                name="studentName"
+                value={ticketData.studentName}
+                readOnly
+              />
+            </div>
               <div className="form-group">
                 <label htmlFor="ticketType">Ticket Type</label>
                 <input
@@ -222,9 +221,9 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
                   required
                 />
               </div>
-              <button type="submit">Submit → </button>
+              <button type="submit" style = {{margin: '10px'}}>Submit</button>
+              <button style = {{margin: '10px'}} onClick={() => setIsModalOpen(false)}>Close</button>
             </form>
-            <button onClick={() => setIsModalOpen(false)}>Close</button>
           </div>
         </div>
       )}
