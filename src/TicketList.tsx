@@ -1,85 +1,75 @@
 import React from 'react';
 
+// Compact Ticket class definition
 class Ticket {
-    public studentID: string;
-    public studentName: string;
-    public ticketType: string;
-    public description: string;
-    public location: string;
-    public currentDate: Date;
-
-    constructor() {
-      this.studentID = "";
-      this.studentName = "";
-      this.ticketType =  "";
-      this.description = "";
-      this.location = ""
-      this.currentDate = new Date();
-    }
+  constructor(
+    public studentID: string = "",
+    public studentName: string = "",
+    public ticketType: string = "",
+    public description: string = "",
+    public location: string = "",
+    public currentDate: Date = new Date()
+  ) {}
 }
 
 interface TicketListProps {
   tickets: Ticket[];
 }
 
-function calculateTimeDifference(givenDate: Date): { days: number; hours: number; minutes: number; seconds: number } {
-  const currentDate = new Date();
-  const timeDifference = currentDate.getTime() - givenDate.getTime(); // Difference in milliseconds
+// Helper function to format the time difference as a string
+// function formatTime(date: Date): string {
+//   const currentDate = new Date();
+//   const timeDifference = currentDate.getTime() - date.getTime();
+//   const Totalhours = Math.floor(timeDifference / 3600000);
+//   const Totalminutes = Math.floor(timeDifference % 3600000 / 60000);
+//   return `${Totalhours}h ${Totalminutes}m`;
+// }
 
-  const seconds = Math.floor(timeDifference / 1000); // Convert to seconds
-  const minutes = Math.floor(seconds / 60); // Convert to minutes
-  const hours = Math.floor(minutes / 60); // Convert to hours
-  const days = Math.floor(hours / 24); // Convert to days
+// Helper function to format the time difference as a string in PST
+function formatTime(date: Date): string {
+  // Convert the date to PST
+  const pstDate = new Date(date.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+  const currentDate = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
 
-  return { days, hours: hours % 24, minutes: minutes % 60, seconds: seconds % 60 };
+  const timeDifference = currentDate.getTime() - pstDate.getTime();
+  const Totalhours = Math.floor(timeDifference / 3600000);
+  const Totalminutes = Math.floor((timeDifference % 3600000) / 60000);
+
+  return `${Totalhours}h ${Totalminutes}m`;
 }
 
-function formatDate(date:Date) {
-  const day = date.getDate();
-  const month = date.getMonth() + 1; // Months are zero-indexed
-  const year = date.getFullYear();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-  const currentDate = new Date();
-  const timeDifference = currentDate.getTime() - date.getTime(); // Difference in milliseconds
-  const Totalhours = Math.floor(timeDifference / 3600000); // Convert to seconds
-  const Totalminutes = Math.floor(timeDifference % 3600000 / 60000); // Convert to seconds
-  const Totalseconds = Math.floor(timeDifference %  60000/ 1000); // Convert to seconds
 
-  return `${month}/${day}/${year}`;
-}
-
-function formatTime(date:Date) {
-  const currentDate = new Date();
-  const timeDifference = currentDate.getTime() - date.getTime(); // Difference in milliseconds
-  const Totalhours = Math.floor(timeDifference / 3600000); // Convert to seconds
-  const Totalminutes = Math.floor(timeDifference % 3600000 / 60000); // Convert to seconds
-  const Totalseconds = Math.floor(timeDifference %  60000 / 1000); // Convert to seconds
-
-  return `${Totalhours} Hours, ${Totalminutes} Minutes`;
-}
-
+// TicketList component
 const TicketList: React.FC<TicketListProps> = ({ tickets }) => {
   const sortedTickets = [...tickets].sort((a, b) => a.currentDate.getTime() - b.currentDate.getTime());
   return (
-    <div className="ticket-form-container">
-        {sortedTickets.map((ticket, index) => (
-            <li key={ticket.studentID} className="ticket-item">
-                <div className="ticket-header">
-                    <h2 className="ticket-title">{index + 1}. {ticket.studentName}</h2>
-                </div>
-                <div className="ticket-body">
-                    <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
-                    <p><strong>Location:</strong> {ticket.location}</p>
-                    <p><strong>Created Time:</strong> {formatTime(ticket.currentDate)}</p>
-                </div>
-            </li>         
-        ))}
-    </div>
+    <ul className="ticket-list">
+      {sortedTickets.map((ticket, index) => (
+        <li key={ticket.studentID} className="ticket-item">
+          {index + 1}. {ticket.studentName} - {ticket.ticketType} - {ticket.location} - {formatTime(ticket.currentDate)}
+        </li>         
+      ))}
+    </ul>
   );
 };
 
-
-
 export default TicketList;
+
+// CSS in JS (for inline styling) or external CSS file
+const ticketItemStyle = {
+  listStyleType: 'none',
+  padding: '10px',
+  border: '1px solid #ccc',
+  marginBottom: '15px',
+  backgroundColor: '#fff',
+  // borderRadius: '20px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+} as React.CSSProperties;
+
+// Add this style object to the `style` prop of the `li` element if using inline styles
+// <li key={ticket.studentID} className="ticket-item" style={ticketItemStyle}>
