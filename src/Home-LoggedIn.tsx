@@ -24,6 +24,7 @@ const LoggedInHome = () => {
       try {
         const userObject: UserType = jwt_decode<UserType>(token);
         if (userObject) {
+          console.log(userObject)
           setUser(userObject);
         } else {
           console.error("User object not retrieved");
@@ -57,6 +58,7 @@ const LoggedInHome = () => {
     ME100
   </h1>
   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+    {console.log("user" + user)}
     {user ? (
       <>
         <span className="user-greeting">Hi, {user.name}!</span>
