@@ -9,6 +9,7 @@ const OpenTickets: React.FC = () => {
 
     // Define the Ticket interface
     class Ticket {
+      public id: string;
       public studentID: string;
       public studentName: string;
       public ticketType: string;
@@ -17,6 +18,7 @@ const OpenTickets: React.FC = () => {
       public currentDate: Date;
   
       constructor() {
+        this.id = "";
         this.studentID = "";
         this.studentName = "";
         this.ticketType =  "";
@@ -60,8 +62,9 @@ const OpenTickets: React.FC = () => {
       })
       .then((data) => {
         // Handle the API response data here
-        const ticketObjects = data.map((item: { studentID: string; studentName: string; ticketType: string; description: string; location: string; currentDate: string | number | Date; }) => {
+        const ticketObjects = data.map((item: { id:string; studentID: string; studentName: string; ticketType: string; description: string; location: string; currentDate: string | number | Date; }) => {
             const ticket = new Ticket();
+            ticket.id = item.id;
             ticket.studentID = item.studentID;
             ticket.studentName = item.studentName;
             ticket.ticketType = item.ticketType;

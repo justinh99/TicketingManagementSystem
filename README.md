@@ -4,6 +4,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
+First run npm install
+
+### `npm install`
+
+Then run npm audit fix --force
+
+### `npm audit fix --force`
+
 In the project directory, you can run:
 
 ### `npm start`
