@@ -11,7 +11,7 @@ type UserType = {
   name: string;
 };
 
-const Home = () => {
+const LoggedInHome = () => {
   const [user, setUser] = useState<UserType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('openTickets');
@@ -19,10 +19,26 @@ const Home = () => {
 
   useEffect(() => {
     document.title = "Home";
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      try {
+        const userObject: UserType = jwt_decode<UserType>(token);
+        if (userObject) {
+          setUser(userObject);
+        } else {
+          console.error("User object not retrieved");
+          localStorage.removeItem('userToken');
+        }
+      } catch (e) {
+        console.error("Token validation failed", e);
+        localStorage.removeItem('userToken');
+      }
+    }
   }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem('userToken');
+    localStorage.clear();
     setUser(null);
     navigate('/');
   };
@@ -33,20 +49,27 @@ const Home = () => {
 
   return (
     <div className="App">
-      <header className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ flex: 1 }}></div>
-        <h1 style={{ flex: 1, textAlign: 'center' }} onClick={() => navigate("/")}>ME100</h1>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-          {user ? (
-            <>
-              <span style={{ fontSize: '1.5rem', marginRight: '10px' }}>Hi, {user.name}!</span>
-              <button onClick={handleLogout}>Log Out</button>
-            </>
-          ) : (
-            <LoginButton onLoginSuccess={setUser} />
-          )}
-        </div>
-      </header>
+      <header className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+  <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+    <img src="/logo.png" alt="Your Logo" style={{ width: 'auto', height: '150px' }} /> {/* Adjust height as needed */}
+  </div>
+  <h1 style={{ fontSize: '50px' }} onClick={() => navigate("/")}>
+    ME100
+  </h1>
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+    {user ? (
+      <>
+        <span className="user-greeting">Hi, {user.name}!</span>
+        <button className="create-ticket-button" onClick={() => setIsModalOpen(true)}>Create Ticket</button>
+        <button className="logout-button" onClick={handleLogout}>Log Out</button>
+      </>
+    ) : (
+      <div className="login-button-container">
+        <LoginButton onLoginSuccess={setUser} />
+      </div>
+    )}
+  </div>
+</header>
       <div>
         <p style={{ fontSize: '1.5rem' }}>
           Welcome to ME 100 OH Queue. Please make a ticket on the queue
@@ -55,6 +78,7 @@ const Home = () => {
           Please note that creating a ticket acknowledges that we gather your information to help you with your problem.
           We will not share your information with anyone outside of the ME 100 staff.
         </p>
+        {isModalOpen && <TicketForm isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} userData={user} />}
         <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
           <div
             style={{
@@ -86,4 +110,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default LoggedInHome;

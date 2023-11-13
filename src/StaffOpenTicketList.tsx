@@ -2,6 +2,7 @@ import React from 'react';
 
 const API_URL = process.env.REACT_APP_API_URL;
 class Ticket {
+  public id: string;
   public studentID: string;
   public studentName: string;
   public ticketType: string;
@@ -11,6 +12,7 @@ class Ticket {
   public assignedDate: Date;
 
   constructor() {
+    this.id = "";
     this.studentID = "";
     this.studentName = "";
     this.ticketType =  "";
@@ -22,6 +24,7 @@ class Ticket {
 }
 
 class AssignRequest {
+  public id: string;
   public studentID: string;
   public studentName: string;
   public ticketType: string;
@@ -30,14 +33,17 @@ class AssignRequest {
   public currentDate: Date;
   public assignedDate: Date;
   public token: string;
+  public staffName: string;
 
   constructor() {
+    this.id = "";
     this.studentID = "";
     this.studentName = "";
     this.ticketType =  "";
     this.description = "";
     this.location = "";
     this.token = "";
+    this.staffName = "";
     this.currentDate = new Date();
     this.assignedDate = new Date();
   }
@@ -50,25 +56,30 @@ interface TicketListProps {
 
 // Handle form submission
 const handleAssignedTicket = (ticket: Ticket) => {
-  const accessTokenRow = document.cookie.split('; ').find(row => row.startsWith('accessToken='));
-
-  let accessToken;
-  if (accessTokenRow) {
-  accessToken = accessTokenRow.split('=')[1];
-  }
-console.log(accessToken);
-  if (accessTokenRow) {
-  accessToken = accessTokenRow.split('=')[1];
-  console.log(accessToken);
+  
+  //const accessTokenRow = document.cookie.split('; ').find(row => row.startsWith('accessToken='));
+  //let accessToken;
+  //if (accessTokenRow) {
+  //accessToken = accessTokenRow.split('=')[1];
+  //}
+  //console.log(accessToken);
+const isStaff = localStorage.getItem('isStaff');
+  if (isStaff) {
+  //accessToken = accessTokenRow.split('=')[1];
+  //console.log(accessToken);
+  const localstaffName = localStorage.getItem('userName');
+  const staffName = localstaffName || "";
   const assignTicket = `${API_URL}/ticket/assignTicket`;
   const assignRequest = new AssignRequest();
+  assignRequest.id = ticket.id;
    assignRequest.studentID = ticket.studentID;
    assignRequest.studentName = ticket.studentName;
    assignRequest.ticketType = ticket.ticketType;
    assignRequest.description = ticket.description;
    assignRequest.currentDate = ticket.currentDate;
    assignRequest.location = ticket.location;
-   assignRequest.token = accessToken;
+   assignRequest.token = "";
+   assignRequest.staffName = staffName;
     console.log(assignRequest);
   const requestOptions = {
       method: 'POST',

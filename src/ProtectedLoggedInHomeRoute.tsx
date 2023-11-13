@@ -1,25 +1,23 @@
 // ProtectedRoute.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Route, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 import Login from './login';
-import TicketHistroy from './TicketHistroy'
+import StaffHome from './StaffHome';
+import PrivacyNoticePage from './PrivacyNotice';
 import Home from './Home';
+import LoggedInHome from './Home-LoggedIn';
 import axios from 'axios';
 
 
-const ProtectedStaffStudentHomeRoute = () => {
+
+
+const ProtectedLoggedInHomeRoute = () => {
+
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  // const accessTokenRow = document.cookie
-  //   .split('; ')
-  //   .find(row => row.startsWith('accessToken='));
-
-  // let accessToken;
-  // if (accessTokenRow) {
-  //   accessToken = accessTokenRow.split('=')[1];
-  // }
-  //console.log(accessToken);
+  const token = localStorage.getItem('userToken');
+  console.log(token);
   const API_URL = process.env.REACT_APP_API_URL;
   const [isOpen, setIsOpen] = useState(false);
   const getQueueStatusUrl = `${API_URL}/getQueueStatus`;
@@ -33,17 +31,19 @@ const ProtectedStaffStudentHomeRoute = () => {
       setIsOpen(false); // Set to false or show an error state as appropriate
     }
   };
-  const isStaff = localStorage.getItem('isStaff') === 'true';
   if (isOpen) {
-    if (isStaff) {
-      return <TicketHistroy/>;
+    console.log(isOpen);
+    if (token) {
+      return <LoggedInHome/>;
     } else {
       // Redirect to the login page if not authenticated
-      return <Login/>;
+      return <Home/>;
     }
+  } else {
+    return <Home/>
   }
-  return <Home/>
 
+  
 };
 
-export default ProtectedStaffStudentHomeRoute;
+export default ProtectedLoggedInHomeRoute;
