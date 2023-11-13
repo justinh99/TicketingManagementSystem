@@ -26,8 +26,13 @@ interface TicketFormUser {
 }
 
 const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, userData }) => {
+  const studentDataString = localStorage.getItem('studentData') || '';
+
+  // Parse the JSON string into a JavaScript object
+  const studentData = JSON.parse(studentDataString);
+  console.log(studentData)
   const [ticketData, setTicketData] = useState<Ticket>({
-    studentId: '',
+    studentId: studentData.SID,
     studentName: localStorage.getItem('userName') || '', 
     ticketType: '',
     description: '',
@@ -175,8 +180,7 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
                   id="studentId"
                   name="studentId"
                   value={ticketData.studentId}
-                  onChange={handleInputChange}
-                  required
+                  readOnly
                 />
               </div>
               <div className="form-group">

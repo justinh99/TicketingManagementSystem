@@ -38,6 +38,7 @@ const LoggedInHome = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('userToken');
+    localStorage.clear();
     setUser(null);
     navigate('/');
   };
