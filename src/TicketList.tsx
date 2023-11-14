@@ -159,8 +159,8 @@ const TicketList: React.FC<TicketListProps> = ({ tickets }) => {
             <div>
             {ticket.studentID === studentID.toString() && (  // Check if IDs match
             <>
-              <button className="assign-button" onClick={()=>handleEditTicket(ticket)}>Edit Ticket</button>
-              <button className="assign-button">Delete Ticket</button>
+              {/* <button className="assign-button" onClick={()=>handleEditTicket(ticket)}>Edit Ticket</button>
+              <button className="assign-button">Delete Ticket</button> */}
             </>
           )}
             </div>
