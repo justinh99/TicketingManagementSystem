@@ -33,7 +33,8 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
   console.log(studentData)
   const [ticketData, setTicketData] = useState<Ticket>({
     studentId: studentData.SID,
-    studentName: localStorage.getItem('userName') || '', 
+    //studentName: localStorage.getItem('userName') || '', 
+    studentName: studentData.Name,
     ticketType: '',
     description: '',
     location: '',
@@ -103,7 +104,7 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
     });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setTicketData((prevData) => ({
       ...prevData,
@@ -127,7 +128,8 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
       return;
     }
 
-    const { studentId, studentName, ticketType, description, location } = ticketData;
+
+    const {studentId, studentName, ticketType, location, description} = ticketData;
     if (!studentId || !studentName || !ticketType || !description || !location) {
       alert("Please fill in all fields before submitting.");
       return;
@@ -135,6 +137,21 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
     setIsSubmitClicked(true);
     const createTicket = `${API_URL}/ticket/createTicket`; // Replace with your API URL
 
+
+    type TicketType = 'type1' | 'type2'; 
+    const isTicketType = (type: any): type is TicketType => {
+      return ['type1', 'type2'].includes(type);
+    };    
+
+      const availableLocations: Record<TicketType, string[]> = {
+      type1: ["Location A", "Location B"], // Locations for 'Office Hour'
+      type2: ["Location C", "Location D"], // Locations for 'Lab'
+      // ... other ticket types
+    };
+    //const getLocationsForType = (type: TicketType) => availableLocations[type] || [];
+    const getLocationsForType = (type: TicketType) => {
+      return availableLocations[type] || [];
+    };
 
     // Define the options for the fetch request, including method, headers, and body.
     const requestOptions = {
@@ -174,32 +191,47 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
             <h2>Create a Ticket</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="studentId">Student ID</label>
-                <input
-                  type="text"
-                  id="studentId"
-                  name="studentId"
-                  value={ticketData.studentId}
-                  readOnly
-                />
-              </div>
-              <div className="form-group">
-              <label htmlFor="studentName">Student Name</label>
-              <input
-                type="text"
-                id="studentName"
-                name="studentName"
-                value={ticketData.studentName}
-                readOnly
-              />
-            </div>
-              <div className="form-group">
                 <label htmlFor="ticketType">Ticket Type</label>
-                <input
-                  type="text"
+                <select
                   id="ticketType"
                   name="ticketType"
                   value={ticketData.ticketType}
+                  onChange={handleInputChange}
+                  className="ticketType-button"
+                  required
+                >
+                  <option value="">Choose the Ticket type</option>
+                  <option value="Office Hour">Office Hour</option>
+                  <option value="Lab">Lab</option>
+                  <option value="Project">Project</option>
+                  <option value="Others">Others</option>
+                  {/* Add more options as needed */}
+                </select>
+              </div>
+              {/* <div className="form-group">
+                <label htmlFor="location">Location</label>
+                {ticketData.ticketType && (
+              <select
+                id="location"
+                name="location"
+                value={ticketData.location}
+                onChange={handleInputChange}
+                required
+              >
+              <option value="">Choose a location</option>
+            {getLocationsForType(ticketData.ticketType).map((location) => (
+              <option key={location} value={location}>{location}</option>
+            ))}
+              </select>
+            )}
+              </div> */}
+              <div className="form-group">
+                <label htmlFor="location">Location</label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={ticketData.location}
                   onChange={handleInputChange}
                   required
                 />
@@ -210,17 +242,6 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
                   id="description"
                   name="description"
                   value={ticketData.description}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="location">Location</label>
-                <input
-                  type="text"
-                  id="location"
-                  name="location"
-                  value={ticketData.location}
                   onChange={handleInputChange}
                   required
                 />

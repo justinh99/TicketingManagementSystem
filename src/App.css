@@ -342,12 +342,31 @@ li {
 
 
 .user-greeting {
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin-right: 10px;
 }
+.create-ticket-button{
+  margin: 10px;
+  width: 400px;
+  height: 80px;
+  border-width: 2px;
+  border-color: black;
+}
 
-.create-ticket-button, .logout-button {
-  margin-right: 10px;
+.ticketType-button {
+  width: 70%;  /* Full width */
+  padding: 10px; /* Some padding */
+  border: 1px solid #ccc; /* A light border */
+  border-radius: 4px; /* Rounded corners */
+  background-color: white; /* Background color */
+  cursor: pointer; /* Change mouse cursor on hover */
+  /* Add more styling as needed */
+}
+
+.survey-button, .logout-button {
+  margin: 10px;
+  width: 150px;
+  height: 50px;
 }
 
 .login-button-container {

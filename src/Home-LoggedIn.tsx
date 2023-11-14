@@ -61,8 +61,7 @@ const LoggedInHome = () => {
     {console.log("user" + user)}
     {user ? (
       <>
-        <span className="user-greeting">Hi, {user.name}!</span>
-        <button className="create-ticket-button" onClick={() => setIsModalOpen(true)}>Create Ticket</button>
+        <button className="survey-button" onClick={() => window.location.href = 'https://forms.gle/yX97bv9BybaeAZfD6'}>Survey</button>
         <button className="logout-button" onClick={handleLogout}>Log Out</button>
       </>
     ) : (
@@ -73,9 +72,19 @@ const LoggedInHome = () => {
   </div>
 </header>
       <div>
-        <p style={{ fontSize: '1.5rem' }}>
+        {user ? (
+          <>
+            <span className="user-greeting">Hi, {user.name}!</span>
+            <p style={{ fontSize: '1.5rem' }}>
+             Welcome to ME 100 OH Queue. Please make a ticket on the queue
+            </p>
+            <button className="create-ticket-button" onClick={() => setIsModalOpen(true)}>Create Ticket</button>
+          </>
+        ) : (
+          <p style={{ fontSize: '1.5rem' }}>
           Welcome to ME 100 OH Queue. Please make a ticket on the queue
         </p>
+        )}
         <p style={{ fontSize: '1rem', color: 'darkgreen', fontWeight: 700, padding: 30 }}>
           Please note that creating a ticket acknowledges that we gather your information to help you with your problem.
           We will not share your information with anyone outside of the ME 100 staff.

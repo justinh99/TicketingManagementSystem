@@ -50,6 +50,11 @@ const ProtectedLoggedInHomeRoute = () => {
   }, [API_URL]);
 
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+
   console.log("isOpen" + isOpen)
   if (isOpen) {
     console.log(isOpen);
