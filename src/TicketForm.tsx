@@ -1,9 +1,9 @@
-// src/components/TicketForm.tsx
 import React, { useEffect, useState } from 'react';
 import './App.css'; // Import the CSS file for styling
+
 const API_URL = process.env.REACT_APP_API_URL;
 console.log(API_URL);
-// Define the Ticket interface
+
 interface Ticket {
   studentId: string;
   studentName: string;
@@ -16,14 +16,16 @@ type UserType = {
   
 };
 interface TicketFormProps {
-  onTicketSubmit: () => void;  // Callback function to trigger a re-render
-  
+  // onTicketSubmit: () => void;  // Callback function to trigger a re-render
+  isModalOpen: boolean;
+  setIsModalOpen: (isOpen: boolean) => void;
+  userData: UserType | null;
 }
 interface TicketFormUser {
   userData: UserType | null;
 }
 
-const TicketForm: React.FC<TicketFormUser> = ({ userData }) => {
+const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, userData }) => {
   const [ticketData, setTicketData] = useState<Ticket>({
     studentId: '',
     studentName: localStorage.getItem('userName') || '', 
@@ -31,6 +33,14 @@ const TicketForm: React.FC<TicketFormUser> = ({ userData }) => {
     description: '',
     location: '',
   });
+
+
+
+  // const [isModalOpen, setIsModalOpen] = useState(true);
+
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   const newTicket: Ticket = { ...ticketData };
 
   useEffect(() => {
     if (userData) {
@@ -52,9 +62,33 @@ const TicketForm: React.FC<TicketFormUser> = ({ userData }) => {
     };
 
     // Handle form submission, e.g., send data to a server or perform any necessary actions.
+
     console.log('Form submitted with data:', newTicket);
 
-    // Clear the form fields
+    const createTicket = `${API_URL}/ticket/createTicket`;
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(ticketData),
+    };
+    fetch(createTicket, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+      });
+
+    // Clear the form fields after submission
     setTicketData({
       studentId: '',
       studentName: '',
@@ -66,13 +100,12 @@ const TicketForm: React.FC<TicketFormUser> = ({ userData }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-
-    // Update the corresponding field in the ticketData state
     setTicketData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+
 
   const jsonData = 
     {
@@ -129,70 +162,75 @@ const TicketForm: React.FC<TicketFormUser> = ({ userData }) => {
   };
 
   return (
-    <div className="ticket-form-container">
-      <h2>Create a Ticket</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="studentId">Student ID</label>
-          <input
-            type="text"
-            id="studentId"
-            name="studentId"
-            value={ticketData.studentId}
-            onChange={handleInputChange}
-            required
-          />
+    <>
+      {isModalOpen && (
+        <div className="modal" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h2>Create a Ticket</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="studentId">Student ID</label>
+                <input
+                  type="text"
+                  id="studentId"
+                  name="studentId"
+                  value={ticketData.studentId}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="studentName">Student Name</label>
+                <input
+                  type="text"
+                  id="studentName"
+                  name="studentName"
+                  value={ticketData.studentName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="ticketType">Ticket Type</label>
+                <input
+                  type="text"
+                  id="ticketType"
+                  name="ticketType"
+                  value={ticketData.ticketType}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={ticketData.description}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="location">Location</label>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  value={ticketData.location}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <button type="submit">Submit → </button>
+            </form>
+            <button onClick={() => setIsModalOpen(false)}>Close</button>
+          </div>
         </div>
-        <div className="form-group" >
-          <label htmlFor="studentName">Student Name</label>
-          <input
-            type="text"
-            id="studentName"
-            name="studentName"
-            value={ticketData.studentName}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="ticketType">Ticket Type</label>
-          <input
-            type="text"
-            id="ticketType"
-            name="ticketType"
-            value={ticketData.ticketType}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={ticketData.description}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="location">Location</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={ticketData.location}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-
-        <button onClick={handleButtonClick}>Submit → </button>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 
 export default TicketForm;
+

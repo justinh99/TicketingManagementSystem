@@ -45,7 +45,10 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
       console.error('Failed to check staff status:', error);
       // Additional error handling
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 3b12d30e7c5de10095234f818dc7c0336dd68988
   };
   
   const handleLoginFailure = () => {
