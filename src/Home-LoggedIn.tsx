@@ -24,6 +24,7 @@ const LoggedInHome = () => {
       try {
         const userObject: UserType = jwt_decode<UserType>(token);
         if (userObject) {
+          console.log(userObject)
           setUser(userObject);
         } else {
           console.error("User object not retrieved");
@@ -38,6 +39,7 @@ const LoggedInHome = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('userToken');
+    localStorage.clear();
     setUser(null);
     navigate('/');
   };
@@ -48,27 +50,41 @@ const LoggedInHome = () => {
 
   return (
     <div className="App">
-      <header className="header gradient-header">
-        <div className="left-header"></div>
-        <h1 className="header-title" onClick={() => navigate("/")}>ME100</h1>
-        <div className="right-header">
-          {user ? (
-            <>
-              <span className="user-greeting">Hi, {user.name}!</span>
-              <button className="create-ticket-button" onClick={() => setIsModalOpen(true)}>Create Ticket</button>
-              <button className="logout-button" onClick={handleLogout}>Log Out</button>
-            </>
-          ) : (
-            <div className="login-button-container">
-              <LoginButton onLoginSuccess={setUser} />
-            </div>
-          )}
-        </div>
-      </header>
+      <header className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+  <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+    <img src="/logo.png" alt="Your Logo" style={{ width: 'auto', height: '150px' }} /> {/* Adjust height as needed */}
+  </div>
+  <h1 style={{ fontSize: '50px' }} onClick={() => navigate("/")}>
+    ME100
+  </h1>
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+    {console.log("user" + user)}
+    {user ? (
+      <>
+        <button className="survey-button" onClick={() => window.location.href = 'https://forms.gle/yX97bv9BybaeAZfD6'}>Survey</button>
+        <button className="logout-button" onClick={handleLogout}>Log Out</button>
+      </>
+    ) : (
+      <div className="login-button-container">
+        <LoginButton onLoginSuccess={setUser} />
+      </div>
+    )}
+  </div>
+</header>
       <div>
-        <p style={{ fontSize: '1.5rem' }}>
+        {user ? (
+          <>
+            <span className="user-greeting">Hi, {user.name}!</span>
+            <p style={{ fontSize: '1.5rem' }}>
+             Welcome to ME 100 OH Queue. Please make a ticket on the queue
+            </p>
+            <button className="create-ticket-button" onClick={() => setIsModalOpen(true)}>Create Ticket</button>
+          </>
+        ) : (
+          <p style={{ fontSize: '1.5rem' }}>
           Welcome to ME 100 OH Queue. Please make a ticket on the queue
         </p>
+        )}
         <p style={{ fontSize: '1rem', color: 'darkgreen', fontWeight: 700, padding: 30 }}>
           Please note that creating a ticket acknowledges that we gather your information to help you with your problem.
           We will not share your information with anyone outside of the ME 100 staff.

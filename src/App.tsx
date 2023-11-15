@@ -18,6 +18,7 @@ import LoggedInHome from './Home-LoggedIn';
 
 
 function App() {
+
   return (
     <div className="App">
       <>
@@ -30,7 +31,7 @@ function App() {
             <Route path = "/staffStudentHome" element = {<ProtectedStaffStudentHomeRoute/>}/>
             <Route path = "/tickethistory" element = {<ProtectedTicketHistroyRoute/>}/>
             <Route path = "/privacyNotice" element = {<ProtectedPrivacyNoticeRoute/>}/>
-            <Route path = "/loggedInHome" element = {<LoggedInHome/>}/>
+            <Route path = "/loggedInHome" element = {<ProtectedLoggedInHomeRoute/>}/>
             <Route path = "*" element ={<Navigate to ="/"/>}></Route>
           </Routes>
         </BrowserRouter>

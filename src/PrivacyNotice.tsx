@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PrivacyNoticePage = () => {
   const navigate = useNavigate();
+  const email = localStorage.getItem('email')
 
   useEffect(() => {
     document.title = "Privacy Notice";
@@ -16,7 +17,7 @@ const PrivacyNoticePage = () => {
           <h2 className="privacy-title">BearQueue wants to access your account</h2>
           <div className="privacy-user-info">
             <span className="privacy-text">You are logged in as </span>
-            <strong className="privacy-text-bold">0000@berkeley.edu</strong>
+            <strong className="privacy-text-bold">{email}</strong>
           </div>
           <button className="privacy-button privacy-confirm" onClick={() => navigate("/loggedInHome")}>Confirm</button>
           <button className="privacy-button privacy-cancel" onClick={() => navigate("/Home")}>Cancel</button>
