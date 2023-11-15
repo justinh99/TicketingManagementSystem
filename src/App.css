@@ -19,12 +19,12 @@
   justify-content: space-between;
   align-items: center;
 }
-.header h1 {
+/* .header h1 {
   text-align: center;
   flex: 4;
   padding-left: 7%;
 
-}
+} */
 
 .App-header {
   background-color: #282c34;
@@ -50,45 +50,48 @@
   }
 }
 
-/* src/components/TicketForm.css */
-.ticket-form-container {
-    padding: 20px;
-    border-radius: 20px;
+.ticket-item { 
+  list-style-type: none; 
+  padding: 30px; 
+  border: 1px solid #ccc; 
+  margin-bottom: 15px; 
+  background-color: #fff; 
+  border-radius: 20px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.ticket-position {
+  flex-shrink: 0; /* prevents the position number from shrinking */
+  margin-right: 10px; /* adds spacing between the position number and the ticket info */
+}
+
+.ticket-info {
+  display: flex;
+  flex-grow: 1; /* ensures that the ticket info takes up the rest of the space */
+  justify-content: space-between; /* spaces out the type, location, and created time */
+}
+
+.ticket-type, .ticket-location, .ticket-created-time {
+  margin-right: 10px; /* adds spacing between the info elements */
+}
+
+/* Add a media query if you want to change the layout on smaller screens */
+@media (max-width: 600px) {
+  .ticket-info {
+    flex-direction: column;
+    align-items: flex-start;
   }
   
-  .ticket-item { 
-    list-style-type: none; 
-    padding: 10px; 
-    border: 1px solid #ccc; 
-    margin-bottom: 15px; 
-    background-color: #fff; 
-    border-radius: 20px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-  }  
-
-  .ticket-header {
-      display: flex;
-      align-items: left;
-      justify-content: space-between;
+  .ticket-type, .ticket-location, .ticket-created-time {
+    margin-right: 0;
   }
-  
+}
 
-  .ticket-title {
-      font-size: 20px;
-      margin-right: 0;
-  }
-  
-  .ticket-body p {
-    display: flex;
-    align-items: left;
-    justify-content: space-between;
-
-  }
 .form-group {
   margin-bottom: 10px;
 }
@@ -125,11 +128,11 @@ button:hover {
 }
 
 .tickets-container {
-  max-width: 800px; /* or any other value that suits your design */
+  max-width: 900px; /* or any other value that suits your design */
   margin: 0 auto; /* centers the container */
   padding: 20px; /* adds some space inside the container */
   border: 1px solid #ccc; /* adds a border around the container */
-  border-radius: 10px; /* optional: rounds the corners */
+  border-radius: 15px; /* optional: rounds the corners */
   background-color: #f9f9f9; /* optional: adds a background color */
 }
 
@@ -159,6 +162,7 @@ button:hover {
   border-radius: 20px;
   
 }
+
 
 /* CSS for success message */
 .success-message {
@@ -325,14 +329,6 @@ li {
 /* ... existing styles ... */
 
 
-<<<<<<< HEAD
-/* .gradient-header {
-  background: linear-gradient(#66a1d5 0%,#ffff
-   100%);
-} */
-
-=======
->>>>>>> b1e37ee0dc8a816d8bbd6cbb02896b9c739f9312
 .header {
   display: flex;
   justify-content: space-between;

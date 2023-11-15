@@ -104,31 +104,44 @@ const Home = () => {
     {isOpen ? (
        <div className="App">
       <header className="header" style={{ display: 'flex', alignItems: 'center' }}>
-      <div style={{ display: 'flex', justifyContent: 'flex-start', width: '150px' }}>
-        <img src="/logo.png" alt="Your Logo" style={{ width: '100%', height: 'auto' }} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <img src="/logo.png" alt="Your Logo" style={{ width: 'auto', height: '90px' }} />
+        <div style={{ height: '50px', width: '3px', backgroundColor: '#003262', margin: '0 10px' }}></div>
+        <h1 style={{ fontSize: '30px', marginLeft: '10px', color:'#003262' }} onClick={() => navigate("/")}>
+          ME100
+        </h1>
       </div>
-      <h1 style={{ flex: 1, textAlign: 'center', fontSize: '50px', marginRight: '150px' }} onClick={() => navigate("/")}>
-        ME100
-      </h1>
+      <div style={{ height: '1px', width: '100vw', backgroundColor: '#003262', position: 'absolute', left: 0, top: '105px' }}></div>
       <div style={{ display: 'flex', justifyContent: 'flex-end', width: '150px' }}>
-        {user ? (
-          <>
-            <span style={{ fontSize: '1.5rem', marginRight: '10px' }}>Hi, {user.name}!</span>
-            <button onClick={() => {}}>Log Out</button>
-          </>
-        ) : (
           <LoginButton onLoginSuccess={setUser} />
-        )}
+
       </div>
     </header>
     <div>
-      <p style={{ fontSize: '1.5rem' }}>
-        Welcome to ME 100 OH Queue. Please make a ticket on the queue
-      </p>
-      <p style={{ fontSize: '1rem', color: 'darkgreen', fontWeight: 700, padding: 30 }}>
+    <p style={{ 
+      fontSize: '2.7rem', // Larger font size
+      fontWeight: 'semi-bold', // Bold font
+      textAlign: 'left',
+      marginTop: '60px', // Adjust top margin to align with the bottom of the vertical line
+      paddingLeft: '130px', // Left padding to create space from the vertical line
+    }}>
+      Welcome to ME 100 OH Queue.<br />
+      To get started, make a ticket.
+    </p>
+    <div style={{ 
+      height: '1px', 
+      width: '100vw', 
+      backgroundColor: '#003262', 
+      position: 'absolute', 
+      left: 0, 
+      top: '300px', // Adjust this value based on where you want the line to appear
+      zIndex: 1 // Optional, in case it's getting hidden behind other elements
+      }}>
+    </div>
+      {/* <p style={{ fontSize: '1rem', color: 'darkgreen', fontWeight: 700, padding: 30 }}>
         Please note that creating a ticket acknowledges that we gather your information to help you with your problem.
         We will not share your information with anyone outside of the ME 100 staff.
-      </p>
+      </p> */}
       <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
         <div
           style={{

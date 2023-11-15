@@ -2,16 +2,6 @@ import React from 'react';
 
 // Compact Ticket class definition
 class Ticket {
-<<<<<<< HEAD
-  constructor(
-    public studentID: string = "",
-    public studentName: string = "",
-    public ticketType: string = "",
-    public description: string = "",
-    public location: string = "",
-    public currentDate: Date = new Date()
-  ) {}
-=======
     public id: string;
     public studentID: string;
     public studentName: string;
@@ -29,7 +19,6 @@ class Ticket {
       this.location = ""
       this.currentDate = new Date();
     }
->>>>>>> b1e37ee0dc8a816d8bbd6cbb02896b9c739f9312
 }
 
 interface TicketListProps {
@@ -59,9 +48,6 @@ function formatTime(date: Date): string {
 }
 
 
-<<<<<<< HEAD
-// TicketList component
-=======
 
 class EditRequest {
   public id: string;
@@ -139,7 +125,6 @@ const handleEditTicket = (ticket: Ticket) => {
 }
 
 
->>>>>>> b1e37ee0dc8a816d8bbd6cbb02896b9c739f9312
 const TicketList: React.FC<TicketListProps> = ({ tickets }) => {
   const studentDataString = localStorage.getItem('studentData') || '';
   let studentID = '';
@@ -149,44 +134,20 @@ const TicketList: React.FC<TicketListProps> = ({ tickets }) => {
   console.log(studentID);
   const sortedTickets = [...tickets].sort((a, b) => a.currentDate.getTime() - b.currentDate.getTime());
   return (
-<<<<<<< HEAD
-    <ul className="ticket-list">
-      {sortedTickets.map((ticket, index) => (
-        <li key={ticket.studentID} className="ticket-item">
-          {index + 1}. {ticket.studentName} - {ticket.ticketType} - {ticket.location} - {formatTime(ticket.currentDate)}
-        </li>         
-      ))}
-    </ul>
-=======
     <div className="ticket-form-container">
       {sortedTickets.map((ticket, index) => (
-        <li
-          key={ticket.studentID}
-          className={`ticket-item ${ticket.studentID === studentID.toString() ? 'matched-ticket' : ''}`}
-        >
-          <div className="ticket-header">
-            <h2 className="ticket-title">{index + 1}. {ticket.studentName}</h2>
-            <div>
-            {ticket.studentID === studentID.toString() && (  // Check if IDs match
-            <>
-              {/* <button className="assign-button" onClick={()=>handleEditTicket(ticket)}>Edit Ticket</button>
-              <button className="assign-button">Delete Ticket</button> */}
-            </>
-          )}
-            </div>
-          </div>
-          <div className="ticket-body">
-            {console.log(typeof(studentID))}
-            {console.log(typeof(ticket.studentID))}
-            {console.log(`Matching student ID: ${ticket.studentID === studentID.toString()}`)} 
-            <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
-            <p><strong>Location:</strong> {ticket.location}</p>
-            <p><strong>Created Time:</strong> {formatTime(ticket.currentDate)}</p>
-          </div>
-        </li>
-      ))}
+  <li
+    key={ticket.studentID}
+    className={`ticket-item ${ticket.studentID === studentID.toString() ? 'matched-ticket' : ''}`}>
+    <span className="ticket-position">{`#${index + 1}`}</span>
+    <span className="ticket-info">
+      <span className="ticket-type"><strong>Type:</strong> {ticket.ticketType}</span>
+      <span className="ticket-location"><strong>Location:</strong> {ticket.location}</span>
+      <span className="ticket-created-time"><strong>Created:</strong> {formatTime(ticket.currentDate)}</span>
+    </span>
+  </li>
+  ))}
     </div>
->>>>>>> b1e37ee0dc8a816d8bbd6cbb02896b9c739f9312
   );
 };
 
