@@ -265,66 +265,72 @@ li {
   width: 80%;
   max-width: 500px;
 }
-.privacy-container {
+/* Privacy Content*/
+.privacy-notice-container {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100vh;
-  background: #F4F4F4;
-  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
 }
 
-.privacy-content {
-  width: 80%;
-  max-width: 500px;
-  background: white;
-  border: 2px solid #333;
-  border-radius: 10px;
-  padding: 20px;
+.privacy-notice-card {
+  padding: 40px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 500px;
   text-align: left;
 }
 
-.privacy-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+.privacy-notice-title {
   margin-bottom: 20px;
 }
 
-.privacy-user-info {
-  font-size: 18px;
-  margin-bottom: 30px;
+.privacy-notice-description {
+  margin-bottom: 20px;
 }
 
-.privacy-text-bold {
-  font-weight: bold;
+.privacy-notice-account-info {
+  background-color: #e8f0fe;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 
-.privacy-button {
-  display: inline-block;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 5px;
+.privacy-notice-auth-details {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.privacy-notice-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.privacy-button-cancel, .privacy-button-authorize {
+  padding: 10px 25px;
+  border-radius: 4px;
   cursor: pointer;
-  text-align: center;
-  margin-right: 10px;
 }
 
-.privacy-confirm {
-  background-color: #4CAF50;
+.privacy-button-cancel {
+  background-color: transparent;
+  color: #757575;
+  border: 1px solid #dadce0;
+}
+
+.privacy-button-authorize {
+  background-color: #1a73e8;
   color: white;
-  border: 1px solid #4CAF50;
+  border: none;
 }
 
-.privacy-cancel {
-  background-color: #f44336;
-  color: white;
-  border: 1px solid #f44336;
+.privacy-notice-different-account {
+  color: #1a73e8;
+  cursor: pointer;
 }
 
-.privacy-button:hover {
-  opacity: 0.9;
-}
 
 /* ... existing styles ... */
 
@@ -351,8 +357,11 @@ li {
 
 
 .user-greeting {
-  font-size: 1.5rem;
-  margin-right: 10px;
+  font-size: '2.7rem';
+  font-weight: 'semi-bold';
+  text-align: 'left';
+  margin-top: '60px';
+  padding-left: '130px';
 }
 .create-ticket-button{
   margin: 10px;
@@ -387,3 +396,13 @@ li {
 }
 
 /* ... remaining styles ... */
+
+
+.create-ticket-button {
+  padding: 10px 20px;
+  background-color: #1a73e8; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

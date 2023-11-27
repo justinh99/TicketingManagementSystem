@@ -50,45 +50,46 @@ const LoggedInHome = () => {
 
   return (
     <div className="App">
-      <header className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-  <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-    <img src="/logo.png" alt="Your Logo" style={{ width: 'auto', height: '150px' }} /> {/* Adjust height as needed */}
-  </div>
-  <h1 style={{ fontSize: '50px' }} onClick={() => navigate("/")}>
-    ME100
-  </h1>
-  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-    {console.log("user" + user)}
-    {user ? (
-      <>
-        <button className="survey-button" onClick={() => window.location.href = 'https://forms.gle/yX97bv9BybaeAZfD6'}>Survey</button>
-        <button className="logout-button" onClick={handleLogout}>Log Out</button>
-      </>
-    ) : (
-      <div className="login-button-container">
-        <LoginButton onLoginSuccess={setUser} />
-      </div>
-    )}
-  </div>
-</header>
+      <header className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img src="/logo.png" alt="Your Logo" style={{ width: 'auto', height: '90px' }} />
+            <div style={{ height: '50px', width: '3px', backgroundColor: '#003262', margin: '0 10px' }}></div>
+            <h1 style={{ fontSize: '30px', marginLeft: '10px', color:'#003262' }} onClick={() => navigate("/")}>
+              ME100
+            </h1>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <button style={{ marginRight: '10px', padding: '10px 20px', backgroundColor: '#003262', color:'white' }}>Survey</button>
+            <LoginButton onLoginSuccess={setUser} />
+          </div>
+      </header>
       <div>
         {user ? (
           <>
+          <p style={{ fontSize: '2.7rem', // Larger font size
+                    fontWeight: 'semi-bold', // Bold font
+                    textAlign: 'left',
+                    marginTop: '60px', // Adjust top margin to align with the bottom of the vertical line
+                    paddingLeft: '130px',
+                    }}>
             <span className="user-greeting">Hi, {user.name}!</span>
-            <p style={{ fontSize: '1.5rem' }}>
-             Welcome to ME 100 OH Queue. Please make a ticket on the queue
             </p>
-            <button className="create-ticket-button" onClick={() => setIsModalOpen(true)}>Create Ticket</button>
+            <p style={{ fontSize: '1.5rem',
+                        fontWeight: 'bold', // Bold font
+                        textAlign: 'left',
+                        marginTop: '50px', // Adjust top margin to align with the bottom of the vertical line
+                        paddingLeft: '130px',}}>
+            Please create a ticket on the queue
+            </p>
           </>
         ) : (
           <p style={{ fontSize: '1.5rem' }}>
           Welcome to ME 100 OH Queue. Please make a ticket on the queue
         </p>
         )}
-        <p style={{ fontSize: '1rem', color: 'darkgreen', fontWeight: 700, padding: 30 }}>
-          Please note that creating a ticket acknowledges that we gather your information to help you with your problem.
-          We will not share your information with anyone outside of the ME 100 staff.
-        </p>
+         <div className="ticket-button">
+            <button className="create-ticket-button" onClick={() => setIsModalOpen(true)}>Create Ticket</button>
+          </div>
         {isModalOpen && <TicketForm isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} userData={user} />}
         <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
           <div

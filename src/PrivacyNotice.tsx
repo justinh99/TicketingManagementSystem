@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PrivacyNoticePage = () => {
   const navigate = useNavigate();
-  const email = localStorage.getItem('email')
+  const email = localStorage.getItem('email') || 'your-email@example.com'; // Fallback in case email is null
 
   useEffect(() => {
     document.title = "Privacy Notice";
@@ -12,15 +12,27 @@ const PrivacyNoticePage = () => {
 
   return (
     <div className="App">
-      <div className="privacy-container">
-        <div className="privacy-content">
-          <h2 className="privacy-title">BearQueue wants to access your account</h2>
-          <div className="privacy-user-info">
-            <span className="privacy-text">You are logged in as </span>
-            <strong className="privacy-text-bold">{email}</strong>
+      <div className="privacy-notice-container">
+        <div className="privacy-notice-card">
+          <h2 className="privacy-notice-title">BearQueue wants to access your account!</h2>
+          <p className="privacy-notice-description">
+            We will not share your information with anyone outside of the ME 100 staff.
+          </p>
+          <div className="privacy-notice-account-info">
+            <p>You are logged in as <strong>{email}</strong></p>
+            <p className="privacy-notice-different-account">Not you? <span onClick={() => navigate("/login")}>Use a different account</span></p>
           </div>
-          <button className="privacy-button privacy-confirm" onClick={() => navigate("/loggedInHome")}>Confirm</button>
-          <button className="privacy-button privacy-cancel" onClick={() => navigate("/Home")}>Cancel</button>
+          <div className="privacy-notice-auth-details">
+            <strong style={{color:'#1a73e8'}}>Authorizing BearQueue allows us to: </strong>
+            <ul>
+              <li>View your email address ({email})</li>
+              <li>View your enrollment status</li>
+            </ul>
+          </div>
+          <div className="privacy-notice-buttons">
+            <button className="privacy-button-cancel" onClick={() => navigate("/")}>Cancel</button>
+            <button className="privacy-button-authorize" onClick={() => navigate("/loggedInHome")}>Authorize</button>
+          </div>
         </div>
       </div>
     </div>

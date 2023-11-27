@@ -103,20 +103,21 @@ const Home = () => {
     <div className="App">
     {isOpen ? (
        <div className="App">
-      <header className="header" style={{ display: 'flex', alignItems: 'center' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-        <img src="/logo.png" alt="Your Logo" style={{ width: 'auto', height: '90px' }} />
-        <div style={{ height: '50px', width: '3px', backgroundColor: '#003262', margin: '0 10px' }}></div>
-        <h1 style={{ fontSize: '30px', marginLeft: '10px', color:'#003262' }} onClick={() => navigate("/")}>
-          ME100
-        </h1>
-      </div>
-      <div style={{ height: '1px', width: '100vw', backgroundColor: '#003262', position: 'absolute', left: 0, top: '105px' }}></div>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', width: '150px' }}>
-          <LoginButton onLoginSuccess={setUser} />
+      <header className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px' }}>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <img src="/logo.png" alt="Your Logo" style={{ width: 'auto', height: '90px' }} />
+    <div style={{ height: '50px', width: '3px', backgroundColor: '#003262', margin: '0 10px' }}></div>
+    <h1 style={{ fontSize: '30px', marginLeft: '10px', color:'#003262' }} onClick={() => navigate("/")}>
+      ME100
+    </h1>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <button style={{ marginRight: '10px', padding: '10px 20px', backgroundColor: '#003262', color:'white' }}>Survey</button>
+    <LoginButton onLoginSuccess={setUser} />
+  </div>
+</header>
 
-      </div>
-    </header>
+
     <div>
     <p style={{ 
       fontSize: '2.7rem', // Larger font size
