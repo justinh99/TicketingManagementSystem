@@ -89,7 +89,7 @@ const LoggedInHome = () => {
           Please note that creating a ticket acknowledges that we gather your information to help you with your problem.
           We will not share your information with anyone outside of the ME 100 staff.
         </p>
-        {isModalOpen && <TicketForm isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} userData={user} />}
+        {isModalOpen && <TicketForm isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} userData={user} type = "create"/>}
         <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
           <div
             style={{

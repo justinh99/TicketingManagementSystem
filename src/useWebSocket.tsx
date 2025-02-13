@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 
 const useWebSocket = () => {
     const [queueStatus, setQueueStatus] = useState<boolean | null>(null);
+    const [queueUpdateCount, setQueueUpdateCount] = useState(0); // ✅ Forces re-render
     const [ticketStatus, setTicketStatus] = useState<string | null>(null);
+    const [ticketUpdateCount, setTicketUpdateCount] = useState(0); // ✅ Forces re-render
 
     useEffect(() => {
         let socket: WebSocket;
@@ -17,10 +19,15 @@ const useWebSocket = () => {
 
             socket.onmessage = (event) => {
                 console.log("📩 WebSocket Message Received:", event.data);
+                
                 if (event.data.startsWith("queueStatus:")) {
-                    setQueueStatus(event.data.split(":")[1] === "true");
+                    const newQueueStatus = event.data.split(":")[1] === "true";
+                    setQueueStatus(newQueueStatus);
+                    setQueueUpdateCount(prev => prev + 1); // ✅ Always increment
                 } else if (event.data.startsWith("ticketUpdate:")) {
-                    setTicketStatus(event.data.split(":")[1]);
+                    const newTicketStatus = event.data.split(":")[1];
+                    setTicketStatus(newTicketStatus);
+                    setTicketUpdateCount(prev => prev + 1); // ✅ Always increment
                 }
             };
 
@@ -42,12 +49,7 @@ const useWebSocket = () => {
         };
     }, []);
 
-    // ✅ Function to manually update queue status
-    const updateQueueStatus = (newStatus: boolean) => {
-        setQueueStatus(newStatus);
-    };
-
-    return { queueStatus, ticketStatus, updateQueueStatus }; // ✅ Return updateQueueStatus
+    return { queueStatus, queueUpdateCount, ticketStatus, ticketUpdateCount };
 };
 
 export default useWebSocket;

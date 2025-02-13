@@ -5,11 +5,13 @@ const API_URL = process.env.REACT_APP_API_URL;
 console.log(API_URL);
 
 interface Ticket {
-  studentId: string;
-  studentName: string;
-  ticketType: string;
-  description: string;
-  location: string;
+   id: string;
+   studentID: string;
+   studentName: string;
+   ticketType: string;
+   description: string;
+   location: string;
+   currentDate: Date;
 }
 type UserType = {
   name: string;
@@ -21,24 +23,28 @@ interface TicketFormProps {
   setIsModalOpen: (isOpen: boolean) => void;
   userData: UserType | null;
   type: string;
+  ticket: Ticket | null
 }
+
 interface TicketFormUser {
   userData: UserType | null;
 }
 
-const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, userData, type}) => {
+const EditTicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, userData, type, ticket}) => {
   const studentDataString = localStorage.getItem('studentData') || '';
 
   // Parse the JSON string into a JavaScript object
   const studentData = JSON.parse(studentDataString);
   console.log(studentData)
   const [ticketData, setTicketData] = useState<Ticket>({
-    studentId: studentData.SID,
+    id: "",
+    studentID: studentData.SID,
     //studentName: localStorage.getItem('userName') || '', 
     studentName: studentData.Name,
     ticketType: '',
     description: '',
     location: '',
+    currentDate : new Date()
   });
 
 
@@ -48,6 +54,13 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
   // const handleSubmit = (e: React.FormEvent) => {
   //   e.preventDefault();
   //   const newTicket: Ticket = { ...ticketData };
+
+  useEffect(() => {
+    if (ticket) {
+      setTicketData(ticket);
+    }
+  }, [ticket]);
+
 
   useEffect(() => {
     if (userData) {
@@ -97,11 +110,14 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
 
     // Clear the form fields after submission
     setTicketData({
-      studentId: '',
-      studentName: '',
+      id: "",
+      studentID: studentData.SID,
+      //studentName: localStorage.getItem('userName') || '', 
+      studentName: studentData.Name,
       ticketType: '',
       description: '',
       location: '',
+      currentDate : new Date()
     });
   };
 
@@ -133,8 +149,8 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
     }
 
 
-    const {studentId, studentName, ticketType, location, description} = ticketData;
-    if (!studentId || !studentName || !ticketType || !description || !location) {
+    const {studentID, studentName, ticketType, location, description} = ticketData;
+    if (!studentID || !studentName || !ticketType || !description || !location) {
       alert("Please fill in all fields before submitting.");
       return;
     }
@@ -264,5 +280,5 @@ const TicketForm: React.FC<TicketFormProps> = ({ isModalOpen, setIsModalOpen, us
   );
 };
 
-export default TicketForm;
+export default EditTicketForm;
 

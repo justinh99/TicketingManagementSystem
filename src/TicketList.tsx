@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import EditTicketForm from './EditTicketForm';
+import TicketForm from './TicketForm';
 
 class Ticket {
     public id: string;
@@ -22,7 +24,11 @@ class Ticket {
 
 interface TicketListProps {
   tickets: Ticket[];
+  openModalForTicket: (ticket: Ticket) => void;
+  // isModalOpen: boolean;
+  // setIsModalOpen: (isOpen: boolean) => void;
 }
+
 
 function calculateTimeDifference(givenDate: Date): { days: number; hours: number; minutes: number; seconds: number } {
   const currentDate = new Date();
@@ -139,14 +145,59 @@ const handleEditTicket = (ticket: Ticket) => {
 }
 
 
-const TicketList: React.FC<TicketListProps> = ({ tickets }) => {
+const TicketList: React.FC<TicketListProps> = ({ tickets, openModalForTicket }) => {
   const studentDataString = localStorage.getItem('studentData') || '';
   let studentID = '';
   if (studentDataString != ''){
     studentID = JSON.parse(studentDataString).SID
   }
-  console.log(studentID);
+  
+  const [user, setUser] = useState<UserType | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  type UserType = {
+    name: string;
+  };
+
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  // const openModalForTicket = (ticket: Ticket) => {
+  //   setSelectedTicket(ticket);
+  //   setIsModalOpen(true);
+  // };
+
+  // console.log(studentID);
   const sortedTickets = [...tickets].sort((a, b) => a.currentDate.getTime() - b.currentDate.getTime());
+
+  const handleDeleteTicket = (ticket: Ticket) => {
+    const deleteTicket = `${API_URL}/ticket/deleteTicket`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(ticket), 
+      };
+  
+  
+      // Make the API request
+    fetch(deleteTicket, requestOptions)
+    .then((response) => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        window.location.reload();
+        return;
+    })
+    .catch((error) => {
+        // Handle any errors that occurred during the fetch.
+        console.error('Fetch error:', error);
+    });
+
+
+    // Add your login logic here
+  };
   return (
     <div className="ticket-form-container">
       {sortedTickets.map((ticket, index) => (
@@ -159,16 +210,16 @@ const TicketList: React.FC<TicketListProps> = ({ tickets }) => {
             <div>
             {ticket.studentID === studentID.toString() && (  // Check if IDs match
             <>
-              {/* <button className="assign-button" onClick={()=>handleEditTicket(ticket)}>Edit Ticket</button>
-              <button className="assign-button">Delete Ticket</button> */}
+              <button className="assign-button"onClick={() => openModalForTicket(ticket)}>Edit Ticket</button>
+              <button className="delete-button" onClick={()=>handleDeleteTicket(ticket)}>Delete Ticket</button>
             </>
           )}
             </div>
           </div>
           <div className="ticket-body">
-            {console.log(typeof(studentID))}
+            {/* {console.log(typeof(studentID))}
             {console.log(typeof(ticket.studentID))}
-            {console.log(`Matching student ID: ${ticket.studentID === studentID.toString()}`)} 
+            {console.log(`Matching student ID: ${ticket.studentID === studentID.toString()}`)}  */}
             <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
             <p><strong>Location:</strong> {ticket.location}</p>
             <p><strong>Created Time:</strong> {formatTime(ticket.currentDate)}</p>

@@ -7,6 +7,8 @@ import Login from './login';
 import { useNavigate } from 'react-router-dom';
 import StaffOpenTickets from './StaffOpenTickets';
 import StaffAssignedTickets from './StaffAssignedTickets';
+import StaffDeletedTickets from './StaffDeletedTickets';
+import StaffClosedTickets from './StaffClosedTickets';
 
 const TicketHistroy = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,11 +56,11 @@ const TicketHistroy = () => {
       <div className="ticket-list-container">
         <div className="ticket-list left-half">
           <h3>Deleted Tickets</h3>
-          <StaffOpenTickets/>
+          <StaffDeletedTickets/>
         </div>
         <div className="ticket-list right-half">
           <h3>Closed Tickets</h3>
-          <StaffAssignedTickets/>
+          <StaffClosedTickets/>
           {/* Display a list of assigned tickets here */}
         </div>
       </div>

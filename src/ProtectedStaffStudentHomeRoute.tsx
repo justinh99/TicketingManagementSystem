@@ -1,5 +1,5 @@
 // ProtectedRoute.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Route, useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider';
 import Login from './login';
@@ -25,6 +25,7 @@ const ProtectedTicketHistroyRoute = () => {
   const API_URL = process.env.REACT_APP_API_URL;
   const [isOpen, setIsOpen] = useState(false);
   const getQueueStatusUrl = `${API_URL}/getQueueStatus`;
+  const [loading, setLoading] = useState(true); // Track loading state
   const fetchQueueStatus = async () => {
     try {
       const response = await axios.get(getQueueStatusUrl);
@@ -35,6 +36,26 @@ const ProtectedTicketHistroyRoute = () => {
       setIsOpen(false); // Set to false or show an error state as appropriate
     }
   };
+
+  useEffect(() => {
+    const getQueueStatusUrl = `${API_URL}/getQueueStatus`;
+    axios.get(getQueueStatusUrl)
+      .then((response) => {
+        setIsOpen(response.data); // Update state with the isOpen value
+      })
+      .catch((error) => {
+        console.error('Network response was not ok:', error);
+        setIsOpen(false); // Fallback value in case of error
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false once the request is complete
+      });
+  }, [API_URL]); // Depend on API_URL, so if it changes, the effect will re-run
+
+  // While we're fetching the queue status, you might want to return null or a loading indicator
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   const isStaff = localStorage.getItem('isStaff') === 'true';
 
   if (isOpen) {
