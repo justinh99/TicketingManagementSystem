@@ -1,113 +1,96 @@
-// src/components/TicketForm.tsx
-import React, { useEffect, useState } from 'react';
-import './App.css'; // Import the CSS file for styling
-import TicketList from './TicketList';
-import AssignedTicketList from './AssignedTicketList';
-
+import React, { useEffect, useState } from "react";
+import AssignedTicketList from "./AssignedTicketList";
+import useWebSocket from "./useWebSocket";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const AssignedTickets: React.FC = () => {
+// ✅ Define Assigned Ticket Model
+class AssignedTicket {
+  public studentID: string;
+  public studentName: string;
+  public ticketType: string;
+  public description: string;
+  public location: string;
+  public currentDate: Date;
+  public assignedDate: Date;
+  public TA: string;
 
-    // Define the Ticket interface
-    class Ticket {
-      public studentID: string;
-      public studentName: string;
-      public ticketType: string;
-      public description: string;
-      public location: string;
-      public currentDate: Date;
-      public assignedDate: Date;
-    
-      constructor() {
-        this.studentID = "";
-        this.studentName = "";
-        this.ticketType =  "";
-        this.description = "";
-        this.location = ""
-        this.currentDate = new Date();
-        this.assignedDate = new Date();
-      }
-    }
-
-    class AssignedTicket {
-      public studentID: string;
-      public studentName: string;
-      public ticketType: string;
-      public description: string;
-      public location: string;
-      public currentDate: Date;
-      public assignedDate: Date;
-      public TA: string;
-    
-      constructor() {
-        this.studentID = "";
-        this.studentName = "";
-        this.ticketType =  "";
-        this.description = "";
-        this.location = "";
-        this.TA = "";
-        this.currentDate = new Date();
-        this.assignedDate = new Date();
-      }
-    }
-
-  const [tickets, setTickets] = useState<AssignedTicket[]>([]);
-
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-
-  
+  // ✅ Constructor with default values for optional cases
+  constructor(
+    studentID: string = "",
+    studentName: string = "",
+    ticketType: string = "",
+    description: string = "",
+    location: string = "",
+    currentDate: Date = new Date(),
+    assignedDate: Date = new Date(),
+    TA: string = ""
+  ) {
+    this.studentID = studentID;
+    this.studentName = studentName;
+    this.ticketType = ticketType;
+    this.description = description;
+    this.location = location;
+    this.currentDate = currentDate;
+    this.assignedDate = assignedDate;
+    this.TA = TA;
   }
+}
 
+
+const AssignedTickets: React.FC = () => {
+  const [tickets, setTickets] = useState<AssignedTicket[]>([]);
+  const { ticketUpdateCount } = useWebSocket(); // ✅ Listen for WebSocket updates
+
+  // ✅ Function to Fetch Assigned Tickets
+  const fetchTickets = async () => {
+    try {
+      console.log("📡 Fetching assigned tickets from:", `${API_URL}/ticket/getAllAssignedTickets`);
+
+      const response = await fetch(`${API_URL}/ticket/getAllAssignedTickets`);
+      if (!response.ok) {
+        throw new Error(`❌ API Response Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("🎯 API Response:", data);
+
+      if (!Array.isArray(data)) {
+        console.error("❌ API did not return an array:", data);
+        return;
+      }
+
+      const ticketObjects = data.map((item: any) => new AssignedTicket(
+        item.studentID,
+        item.studentName,
+        item.ticketType,
+        item.description,
+        item.location,
+        new Date(item.currentDate),
+        new Date(item.assignedDate),
+        item.ta
+      ));
+
+      console.log("✅ Converted Tickets:", ticketObjects);
+      setTickets(ticketObjects);
+    } catch (error) {
+      console.error("❌ Fetch error:", error);
+    }
+  };
+
+  // ✅ Fetch Tickets on Mount & When WebSocket Sends an Update
   useEffect(() => {
-    // Inside this useEffect, you can make the API request
-    // using the fetch API.
-    const getAllTickets = `${API_URL}/ticket/getAllAssignedTickets`; // Replace with your API URL
+    console.log("🔄 Checking conditions for fetching assigned tickets...");
+    fetchTickets(); // Initial fetch
 
+    if (ticketUpdateCount > 0) {
+      console.log("🆕 WebSocket assigned ticket update received:", ticketUpdateCount);
+      console.log("🔄 Refreshing assigned ticket list...");
+      fetchTickets();
+    }
+  }, [ticketUpdateCount]); // Runs when ticket updates occur
 
-    // Define the options for the fetch request, including method, headers, and body.
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-
-    // Make the API request
-    fetch(getAllTickets)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Handle the API response data here
-        const ticketObjects = data.map((item: { studentID: string; studentName: string; ticketType: string; description: string; location: string; currentDate: string | number | Date; ta:string; }) => {
-            const ticket = new AssignedTicket();
-            ticket.studentID = item.studentID;
-            ticket.studentName = item.studentName;
-            ticket.ticketType = item.ticketType;
-            ticket.description = item.description;
-            ticket.location = item.location;
-            ticket.TA = item.ta;
-            ticket.currentDate = new Date(item.currentDate);
-            return ticket;
-          });
-          setTickets(ticketObjects);
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the fetch.
-        console.error('Fetch error:', error);
-      });
-  }, []);
-
-  return (
-    <AssignedTicketList tickets = {tickets} />
-  );
+  return <AssignedTicketList tickets={tickets} />;
 };
 
 export default AssignedTickets;

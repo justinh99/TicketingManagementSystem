@@ -23,7 +23,7 @@ function App() {
     <div className="App">
       <>
       <AuthProvider>
-        <BrowserRouter>
+      <BrowserRouter basename="/ME100"> {/* ✅ Set Base Route */}
         <Routes>
             <Route path = "/" element = {<Home/>}/>
             <Route path = "/login" element={<Login/>} />

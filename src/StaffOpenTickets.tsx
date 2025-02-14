@@ -1,90 +1,98 @@
-// src/components/TicketForm.tsx
-import React, { useEffect, useState } from 'react';
-import './App.css'; // Import the CSS file for styling
-import StaffTicketList from './StaffOpenTicketList';
+import React, { useEffect, useState } from "react";
+import "./App.css"; // Import the CSS file for styling
+import StaffTicketList from "./StaffOpenTicketList";
+import useWebSocket from "./useWebSocket"; // ✅ Import WebSocket Hook
 
 const API_URL = process.env.REACT_APP_API_URL;
-const StaffOpenTickets: React.FC = () => {
 
-    // Define the Ticket interface
-    class Ticket {
-      public id: string;
-      public studentID: string;
-      public studentName: string;
-      public ticketType: string;
-      public description: string;
-      public location: string;
-      public currentDate: Date;
-      public assignedDate: Date;
-    
-      constructor() {
-        this.id = "";
-        this.studentID = "";
-        this.studentName = "";
-        this.ticketType =  "";
-        this.description = "";
-        this.location = ""
-        this.currentDate = new Date();
-        this.assignedDate = new Date();
-      }
-    }
+class Ticket {
+  public id: string;
+  public studentID: string;
+  public studentName: string;
+  public ticketType: string;
+  public description: string;
+  public location: string;
+  public currentDate: Date;
+  public assignedDate: Date;
 
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-
-  
+  constructor(
+    id: string = "",
+    studentID: string = "",
+    studentName: string = "",
+    ticketType: string = "",
+    description: string = "",
+    location: string = "",
+    currentDate: Date = new Date(),
+    assignedDate: Date = new Date()
+  ) {
+    this.id = id;
+    this.studentID = studentID;
+    this.studentName = studentName;
+    this.ticketType = ticketType;
+    this.description = description;
+    this.location = location;
+    this.currentDate = currentDate;
+    this.assignedDate = assignedDate;
   }
+}
 
+
+const StaffOpenTickets: React.FC = () => {
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const { ticketUpdateCount } = useWebSocket(); // ✅ Listen for WebSocket updates
+
+  // ✅ Function to Fetch Open Tickets
+  const fetchTickets = async () => {
+    try {
+      console.log("📡 Fetching open tickets from:", `${API_URL}/ticket/getAllOpenTickets`);
+
+      const response = await fetch(`${API_URL}/ticket/getAllOpenTickets`);
+      if (!response.ok) {
+        throw new Error(`❌ API Response Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("🎯 API Response:", data);
+
+      if (!Array.isArray(data)) {
+        console.error("❌ API did not return an array:", data);
+        return;
+      }
+
+      const ticketObjects = data.map(
+        (item: any) =>
+          new Ticket(
+            item.id,
+            item.studentID,
+            item.studentName,
+            item.ticketType,
+            item.description,
+            item.location,
+            new Date(item.currentDate),
+            new Date(item.assignedDate)
+          )
+      );
+
+      console.log("✅ Converted Tickets:", ticketObjects);
+      setTickets(ticketObjects);
+    } catch (error) {
+      console.error("❌ Fetch error:", error);
+    }
+  };
+
+  // ✅ Fetch Tickets on Mount & When WebSocket Sends an Update
   useEffect(() => {
-    // Inside this useEffect, you can make the API request
-    // using the fetch API.
-    const getAllTickets = `${API_URL}/ticket/getAllOpenTickets`; // Replace with your API URL
+    console.log("🔄 Checking conditions for fetching open tickets...");
+    fetchTickets(); // Initial fetch
 
+    if (ticketUpdateCount > 0) {
+      console.log("🆕 WebSocket open ticket update received:", ticketUpdateCount);
+      console.log("🔄 Refreshing open ticket list...");
+      fetchTickets();
+    }
+  }, [ticketUpdateCount]); // Runs when ticket updates occur
 
-    // Define the options for the fetch request, including method, headers, and body.
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-
-    // Make the API request
-    fetch(getAllTickets)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Handle the API response data here
-        const ticketObjects = data.map((item: {id: string; studentID: string; studentName: string; ticketType: string; description: string; location: string; currentDate: string | number | Date; }) => {
-            const ticket = new Ticket();
-            ticket.id = item.id;
-            ticket.studentID = item.studentID;
-            ticket.studentName = item.studentName;
-            ticket.ticketType = item.ticketType;
-            ticket.description = item.description;
-            ticket.location = item.location;
-            ticket.currentDate = new Date(item.currentDate);
-            return ticket;
-          });
-          setTickets(ticketObjects);
-      })
-      .catch((error) => {
-        // Handle any errors that occurred during the fetch.
-        console.error('Fetch error:', error);
-      });
-  }, []);
-
-  return (
-    <StaffTicketList tickets = {tickets}/>
-  );
+  return <StaffTicketList tickets={tickets} />;
 };
 
 export default StaffOpenTickets;
