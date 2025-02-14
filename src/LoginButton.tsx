@@ -98,7 +98,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onLoginSuccess }) => {
             console.log(student)
             localStorage.setItem('studentData', JSON.stringify(student));
         })
-          navigate("/privacyNotice"); // Non-staff users get redirected here
+          navigate("/loggedInHome"); // Non-staff users get redirected here
         }
       } else {
         // Handle non-200 responses here
