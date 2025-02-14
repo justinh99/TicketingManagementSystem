@@ -24,7 +24,9 @@ const useWebSocket = () => {
         let reconnectTimeout: NodeJS.Timeout;
 
         const connectWebSocket = () => {
-            socket = new WebSocket("ws://localhost:8080/ws/status");
+            const wsURL = getWebSocketURL(); // ✅ Get WebSocket URL dynamically
+            console.log("🔗 Connecting to WebSocket:", wsURL);
+            socket = new WebSocket(wsURL);
 
             socket.onopen = () => {
                 console.log("✅ WebSocket Connected");
