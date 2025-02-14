@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
 
+
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+// ✅ Construct WebSocket URL dynamically based on API URL
+const getWebSocketURL = () => {
+    if (API_URL.startsWith("https")) {
+        return API_URL.replace(/^https/, "wss") + "/ws/status"; // Convert HTTPS → WSS
+    } else {
+        return API_URL.replace(/^http/, "ws") + "/ws/status"; // Convert HTTP → WS
+    }
+};
+
 const useWebSocket = () => {
     const [queueStatus, setQueueStatus] = useState<boolean | null>(null);
     const [queueUpdateCount, setQueueUpdateCount] = useState(0); // ✅ Forces re-render
     const [ticketStatus, setTicketStatus] = useState<string | null>(null);
     const [ticketUpdateCount, setTicketUpdateCount] = useState(0); // ✅ Forces re-render
+
+    
 
     useEffect(() => {
         let socket: WebSocket;
